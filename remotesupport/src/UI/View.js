@@ -1,22 +1,26 @@
-import React, { createContext } from 'react';
+//import React, { createContext } from 'react';
 import Login from './Login';
 import Header from './Header'
 import useToken from './useToken';
 
-function View() {
- const {token, setToken} = useToken();
+const View = () => {
 
+ const {token, setToken} = useToken();
+  var isLogged;
   if(!token) {
+    isLogged = false;
     return (
       <>
       <Header/>
       <Login setToken={setToken} />
       </>
     )
-  }else{
+  } else {
+    isLogged = true;
     return (
       <>
-        <Header/>
+        <Header isLogged={isLogged}/>
+        
       </>
     );
   }

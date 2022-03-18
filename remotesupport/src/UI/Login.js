@@ -2,27 +2,22 @@ import React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function Login({ setToken }) {
+async function loginFetch(credentials) {
+  return fetch('http://localhost:8080/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+}
+
+export default function Login({setToken}) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  async function loginFetch(credentials) {
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-   }
-
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginFetch({
-      username,
-      password
-    });
+    const token = await loginFetch({username, password});
     setToken(token);
   }
 
@@ -57,6 +52,4 @@ export default function Login({ setToken }) {
   )
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+Login.propTypes = { setToken: PropTypes.func.isRequired }
