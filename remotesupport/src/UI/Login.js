@@ -12,6 +12,7 @@ async function loginFetch(credentials) {
 }
 
 export default function Login({setToken}) {
+  
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
@@ -24,7 +25,9 @@ export default function Login({setToken}) {
   return(
     <div className="login-wrapper">
 
-      <h1>Please Log In</h1>
+      <h1>Welcome technician,</h1>
+      
+      <p>Sign in</p>
 
       <form onSubmit={handleSubmit}>
 

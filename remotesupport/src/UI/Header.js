@@ -1,7 +1,11 @@
 import React from 'react';
 import { observer } from "mobx-react-lite";
+import { useInstance } from '../useInstance'
 
 const Header = observer(({isLogged}) => {
+
+
+
   if(!isLogged)
   return(
     <header>

@@ -6,12 +6,14 @@ import useToken from './useToken';
 const View = () => {
 
  const {token, setToken} = useToken();
+
   var isLogged;
+
   if(!token) {
     isLogged = false;
     return (
       <>
-      <Header/>
+      <Header isLogged={isLogged}/>
       <Login setToken={setToken} />
       </>
     )
