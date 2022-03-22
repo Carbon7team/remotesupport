@@ -4,8 +4,6 @@ import { useInstance } from '../useInstance'
 
 const Header = observer(({isLogged}) => {
 
-
-
   if(!isLogged)
   return(
     <header>
