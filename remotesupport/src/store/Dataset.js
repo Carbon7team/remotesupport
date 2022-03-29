@@ -14,6 +14,7 @@ class Dataset {
             measurements: observable,
             activeStates: computed,
             criticalAlarms: computed,
+            warningAlarms: computed,
             fromJSON: action
         });
     }
@@ -24,6 +25,10 @@ class Dataset {
 
     get criticalAlarms(){
         return this.alarms.filter(alarm => alarm.isCritical);
+    }
+
+    get warningAlarms(){
+        return this.alarms.filter(alarm => !alarm.isCritical);
     }
 
     reset(){
@@ -38,23 +43,29 @@ class Dataset {
 
         // map or for Each ?
 
-        this.states.replace(
-            obj.status.map(
-                state => {return new State(state.code, state.name, state.active)}
-            )
-        );
-        
-        this.alarms.replace(
-            obj.alarms.map(
-                alarm => {return new Alarm(alarm.code, alarm.name, alarm.severity)}
-            )
-        );
+        this.states = obj.status.map(state => {return new State(state.code, state.name, state.active)});
 
-        this.measurements.replace(
-            obj.measurements.map(
-                measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)}
-            )
-        );
+        // this.states.replace(
+        //     obj.status.map(
+        //         state => {return new State(state.code, state.name, state.active)}
+        //     )
+        // );
+        
+        this.alarms = obj.alarms.map(alarm => {return new Alarm(alarm.code, alarm.name, alarm.severity)});
+
+        // this.alarms.replace(
+        //     obj.alarms.map(
+        //         alarm => {return new Alarm(alarm.code, alarm.name, alarm.severity)}
+        //     )
+        // );
+
+        this.measurements = obj.measurements.map(measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)});
+
+        // this.measurements.replace(
+        //     obj.measurements.map(
+        //         measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)}
+        //     )
+        // );
     }
 }
 
