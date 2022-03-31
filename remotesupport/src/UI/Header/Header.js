@@ -1,9 +1,7 @@
 import React from 'react';
-import { observer } from "mobx-react-lite";
-import { useInstance } from '../../useInstance'
 
-const Header = observer(({isLogged}) => {
-
+const Header = (props) => {
+  const isLogged = props.isLogged;
   if(!isLogged)
   return(
     <header>
@@ -22,6 +20,6 @@ const Header = observer(({isLogged}) => {
     <button>Logout</button>
   </header>
   )
-});
+};
 
 export default Header;

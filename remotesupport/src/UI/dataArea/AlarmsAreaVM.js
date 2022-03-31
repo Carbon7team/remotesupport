@@ -7,7 +7,15 @@ export class AlarmsAreaVM {
     constructor(dataset){
         this.dataset = dataset;
         this.alarms = dataset.alarms;
+        this.options = [{value: 'All', label: 'All'},
+                        {value: 'Criticals', label: 'Criticals'},
+                        {value: 'Warnings', label: 'Warnings'}];
+        this.alarmType = {value: 'All', label: 'All'};
         makeAutoObservable(this, {alarms: false}, {autoBind: true});
+    }
+
+    handleChange = (optionValue) => {
+        this.alarmType = optionValue;
     }
 
     renderAllAlarms = () => {

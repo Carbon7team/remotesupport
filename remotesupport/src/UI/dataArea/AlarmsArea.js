@@ -10,23 +10,22 @@ const AlarmsArea = observer(() => {
         renderAllAlarms,
         renderCriticalAlarms,
         renderWarningAlarms,
+        options,
+        handleChange,
+        alarmType,
     } = useInstance(new AlarmsAreaVM(useStore()));
 
-    const [alarmType,setAlarmType] = useState({value: 'All', label: 'All'});
+    //const [alarmType,setAlarmType] = useState({value: 'All', label: 'All'});
 
-    handleChange = (optionValue) => {
-        setAlarmType(optionValue);
-    }
-
-    var options = [ {value: 'All', label: 'All'},
-                    {value: 'Criticals', label: 'Criticals'},
-                    {value: 'Warnings', label: 'Warnings'} ];
+    // handleChange = (optionValue) => {
+    //     setAlarmType(optionValue);
+    // }
 
     return(
         <div className='container-wrapper'>
             <div className='title-wrapper'>
                 <h2>Alarms</h2>
-                <p>Filters</p>
+                <p>Filters:</p>
                 <Select id='filterAlarms' options={options} onChange={handleChange}/>
             </div>
 

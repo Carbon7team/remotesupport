@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import useInstance from '../../useInstance'
 import PropTypes from 'prop-types';
 
 async function loginFetch(credentials) {
@@ -11,10 +12,12 @@ async function loginFetch(credentials) {
     .then(data => data.json())
 }
 
-export default function Login({setToken}) {
+const Login = observer((props) => {
+
+  const setToken = props.setToken;
   
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -53,6 +56,8 @@ export default function Login({setToken}) {
 
     </div>
   )
-}
+})
 
 Login.propTypes = { setToken: PropTypes.func.isRequired }
+
+export default Login;

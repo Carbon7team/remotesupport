@@ -4,21 +4,22 @@ import StatesArea from './StatesArea';
 import AlarmsArea from './AlarmsArea';
 import MeasurementsArea from './MeasurementsArea';
 import Dataset from '../store/Dataset';
-import { SocketContext } from '../CallArea/ContextCall';
+import { ContextCall } from '../CallArea/ContextCall';
 
-const dataArea = () => {
-    const {callAccepted, callEnded, /* jsonData, avaiabilityTech */} = useContext(SocketContext);
+const DataArea = () => {
+    const {callAccepted, callEnded, /* jsonData, avaiabilityTech */} = useContext(ContextCall);
 
     const dataSet = new Dataset();
     return(
         <div className='dataArea-wrapper'>
-            <AppContextProvider dataset={dataSet}>
             
             { callAccepted && !callEnded && (
             <>
+            <AppContextProvider dataset={dataSet}>
                 <StatesArea/>
                 <AlarmsArea/>
                 <MeasurementsArea/>
+            </AppContextProvider>
             </>
             )
             }
@@ -37,9 +38,8 @@ const dataArea = () => {
                     </>
                 )
             }
-            </AppContextProvider>
         </div>
     )
 };
 
-export default dataArea;
+export default DataArea;

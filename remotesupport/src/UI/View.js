@@ -1,8 +1,8 @@
 //import React, { createContext } from 'react';
-import Login from './Login';
-import Header from './Header';
-import dataArea from './dataArea/dataArea';
-import callArea from './CallArea/callArea';
+import Login from './Login/Login';
+import Header from './Header/Header';
+import DataArea from './dataArea/DataArea';
+import CallArea from './CallArea/CallArea';
 import useToken from './useToken';
 import { useEffect, useState } from 'react';
 
@@ -21,17 +21,17 @@ const View = () => {
 
     return (
       <div id='view-wrapper'>
-      {isLogged && (
+      {!isLogged && (
         <div id='not-logged-wrapper'>
         <Header isLogged={isLogged}/>
         <Login setToken={setToken}/>
         </div>
       )}
-      {!isLogged && (
+      {isLogged && (
         <div id='logged-wrapper'>
           <Header isLogged={isLogged}/>
-          <dataArea/>
-          <callArea isLogged={isLogged}/>
+          <DataArea/>
+          <CallArea isLogged={isLogged}/>
         </div>
       )}
       </div>
