@@ -10,17 +10,17 @@ const ContextCall = createContext();
 
 const ContextProvider = ({children}) => {
   const [callAccepted, setCallAccepted] = useState(false);
-  const [callEnded, setCallEnded] = useState(false);
-  const [stream, setStream] = useState();
+  const [callEnded, setCallEnded] = useState(true);
+  const [stream, setStream] = useState(undefined);
   const [nameUser, setNameUser] = useState('');
   const [surnameUser, setSurnameUser] = useState('');
   const [companyUser, setCompanyUser] = useState('');
   const [idUser, setIdUser] = useState('');
+  const [jsonData, setJsonData] = useState(undefined);
 
   const myVideo = useRef(null);
   const userVideo = useRef(null);
   const peerInstance = useRef(null);
-
 
   useEffect(() => {
 
@@ -35,7 +35,6 @@ const ContextProvider = ({children}) => {
         }
       }
     });
-
   }, []);
   
   const sendCall = (idUser) => {
@@ -47,6 +46,7 @@ const ContextProvider = ({children}) => {
     });
 
     setCallAccepted(true);
+    setCallEnded(false);
 
     peerInstance.current = peer;
 
@@ -63,21 +63,32 @@ const ContextProvider = ({children}) => {
         userVideo.current.srcObject = remoteStream
         userVideo.current.play();
       });
-
     });
-  }
+
+    const connection = peer.connect(idUser);
+
+    connection.on('open', () => {
+      connection.on('data', function(data) {
+        setJsonData(JSON.stringify(data)); // setting string JSON to stamp later
+      });
+    });
+
+}
 
   const toggleAudio = () => {
-    myVideo.current.getAudioTracks().forEach(track => track.enabled = !track.enabled);
+    stream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
   }
 
   const toggleVideo = () => {
-    myVideo.current.getVideoTracks().forEach(track => track.enabled = !track.enabled);
+    stream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
   }
 
   const leaveCall = () => {
 
     setCallEnded(true);
+    setCallAccepted(false);
+    setStream(undefined);
+    setJsonData(undefined);
 
     peerInstance.current.destroy();
 
@@ -86,18 +97,19 @@ const ContextProvider = ({children}) => {
   
 
   return(
-    <ContextCall.Provider value={[
+    <ContextCall.Provider value={{
       callAccepted,
       callEnded,
       idUser,
       stream,
       myVideo,
       userVideo,
+      jsonData,
       toggleAudio,
       toggleVideo,
       sendCall,
       leaveCall
-    ]} >
+    }} >
       {children}
     </ContextCall.Provider>
   )

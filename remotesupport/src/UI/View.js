@@ -11,13 +11,14 @@ const View = () => {
  const {token, setToken} = useToken(null);
  const [isLogged, setIsLogged] = useState(false);
 
+ //da verificare (nel login verificare try catch async function)
  useEffect(() => {
   if(!token) {
     setIsLogged(false);
   }else{ 
     setIsLogged(true);
   }
- },[token]);
+ },[]);
 
     return (
       <div id='view-wrapper'>

@@ -38,39 +38,34 @@ const useStyles = makeStyles((theme) => ({
 
 const Sidebar = () => {
 
-  const { callAccepted, callEnded, toggleAudio, toggleVideo, leaveCall } = useContext(ContextCall);
-  
+  const {callAccepted, callEnded, toggleAudio, toggleVideo, leaveCall} = useContext(ContextCall);
+
   const [volume, setVolume] = useState(true);
   const [video, setVideo] = useState(true);
+  // const [callAccepted, setCallAccepted] = useState(true);
+  // const [callEnded, setCallEnded] = useState(false);
   
   const classes = useStyles();
 
   return (
-    <Container className={classes.container}>
-
-          <Grid container className={classes.gridContainer}>
-
-            <Grid item xs={12} md={6} className={classes.padding}>
-
-              { volume  && <Button className="volume-button" variant="contained" color="secondary" startIcon={<VolumeUp fontSize="large"/>} fullWidth onClick={() => {setVolume(false); toggleAudio;}}/>}
-              { !volume && <Button className="volume-button" variant="contained" color="secondary" startIcon={<VolumeOff fontSize="large"/>} fullWidth onClick={() => {setVolume(true); toggleAudio;}}/>}
-              { video   && <Button className="video-button" variant="contained" color="secondary" startIcon={<Videocam fontSize="large"/>} fullWidth onClick={() => {setVideo(false); toggleVideo;}}/>}
-              { !video  && <Button className="video-button" variant="contained" color="secondary" startIcon={<VideocamOff fontSize="large"/>} fullWidth onClick={() => {setVideo(true); toggleVideo;}}/>}
-              {callAccepted && !callEnded ? (
-                <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large" />} fullWidth onClick={leaveCall} className={classes.margin}>
-                  Hang Up
-                </Button>
-              ) : ( <></> )
-              //   <Button variant="contained" color="primary" startIcon={<Phone fontSize="large" />} fullWidth onClick={() => callUser(idToCall)} className={classes.margin}>
-              //     Call
-              //   </Button>
+              <div>
+              { volume ?
+                <Button className="volume-button" variant="contained"  startIcon={<VolumeUp fontSize="large"/>}  onClick={() => {setVolume(false); toggleAudio();}}/>
+                  :
+                <Button className="volume-button" variant="contained"  startIcon={<VolumeOff fontSize="large"/>}  onClick={() => {setVolume(true); toggleAudio();}}/>
               }
-
-            </Grid>
-
-          </Grid>
-
-    </Container>
+              { video ?
+                <Button className="video-button" variant="contained"  startIcon={<Videocam fontSize="large"/>}  onClick={() => {setVideo(false); toggleVideo();}}/>
+                  :
+                <Button className="video-button" variant="contained"  startIcon={<VideocamOff fontSize="large"/>}  onClick={() => {setVideo(true); toggleVideo();}}/>
+              }
+              {callAccepted && !callEnded ? 
+                <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large" />}  onClick={() => { leaveCall() }} className={classes.margin}>
+                  Hang Up
+                </Button> 
+                  : 
+                <> </>}
+            </div>
   );
 };
 

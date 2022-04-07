@@ -15,8 +15,17 @@ class Dataset {
             activeStates: computed,
             criticalAlarms: computed,
             warningAlarms: computed,
-            fromJSON: action
+            statesFromJSON: action,
+            alarmsFromJSON: action,
+            measurementsFromJSON: action,
+            resetAlarms: action,
+            resetStates: action,
+            resetMeasurements: action
         });
+    }
+
+    get activeStates(){
+        return this.states.filter(state => state.active);
     }
 
     get notActiveStates(){
@@ -24,34 +33,44 @@ class Dataset {
     }
 
     get criticalAlarms(){
-        return this.alarms.filter(alarm => alarm.isCritical);
+        return this.alarms.filter(alarm => alarm.severity === "critical");
     }
 
     get warningAlarms(){
-        return this.alarms.filter(alarm => !alarm.isCritical);
+        return this.alarms.filter(alarm => alarm.severity === "warning");
     }
 
-    reset(){
-        this.states.clear();
+    resetAlarms(){
         this.alarms.clear();
+    }
+
+    resetStates(){
+        this.states.clear();
+    }
+
+    resetMeasurements(){
         this.measurements.clear();
     }
 
-    fromJSON(jsonData){
+    statesFromJSON(jsonDataParsed){
 
-        var obj = JSON.parse(jsonData);
-
-        // map or for Each ?
-
-        this.states = obj.status.map(state => {return new State(state.code, state.name, state.active)});
+        this.states = jsonDataParsed.map(state => {return new State(state.code, state.name, state.active)});
 
         // this.states.replace(
         //     obj.status.map(
         //         state => {return new State(state.code, state.name, state.active)}
         //     )
         // );
+
+    }
+
+    alarmsFromJSON(jsonDataParsed){
+
+        // var obj = JSON.parse(jsonData);
+
+        // map or for Each ?
         
-        this.alarms = obj.alarms.map(alarm => {return new Alarm(alarm.code, alarm.name, alarm.severity)});
+        this.alarms = jsonDataParsed.map(alarm => {return new Alarm(alarm.code, alarm.name, alarm.severity)});
 
         // this.alarms.replace(
         //     obj.alarms.map(
@@ -59,13 +78,19 @@ class Dataset {
         //     )
         // );
 
-        this.measurements = obj.measurements.map(measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)});
+        
+    }
+
+    measurementsFromJSON(jsonDataParsed){
+
+        this.measurements = jsonDataParsed.map(measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)});
 
         // this.measurements.replace(
         //     obj.measurements.map(
         //         measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)}
         //     )
         // );
+
     }
 }
 

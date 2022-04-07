@@ -3,8 +3,7 @@ import { Typography, AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import VideoPlayer from './components/VideoPlayer';
-import Sidebar from './components/Sidebar';
-import Notifications from './components/Notifications';
+import { ContextProvider } from './ContextCall';
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -36,7 +35,9 @@ const CallArea = (props) => {
     { isLogged && (
     <div className={classes.wrapper}>
       <h2>Video Chat</h2>
-      <VideoPlayer/>
+      <ContextProvider>
+        <VideoPlayer/>
+      </ContextProvider>
     </div>)
     }
     </>

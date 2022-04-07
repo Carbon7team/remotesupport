@@ -3,11 +3,12 @@ import { observer } from "mobx-react-lite";
 import StatesArea from './StatesArea';
 import AlarmsArea from './AlarmsArea';
 import MeasurementsArea from './MeasurementsArea';
-import Dataset from '../store/Dataset';
-import { ContextCall } from '../CallArea/ContextCall';
+import Dataset from '../../store/Dataset'
+import { ContextCall, ContextProvider } from '../CallArea/ContextCall';
+import { AppContextProvider } from '../../contextProvider';
 
 const DataArea = () => {
-    const {callAccepted, callEnded, /* jsonData, avaiabilityTech */} = useContext(ContextCall);
+    const {callAccepted, callEnded,/* avaiabilityTech */} = useContext(ContextCall);
 
     const dataSet = new Dataset();
     return(
@@ -15,11 +16,13 @@ const DataArea = () => {
             
             { callAccepted && !callEnded && (
             <>
+            <ContextProvider>
             <AppContextProvider dataset={dataSet}>
                 <StatesArea/>
                 <AlarmsArea/>
                 <MeasurementsArea/>
             </AppContextProvider>
+            </ContextProvider>
             </>
             )
             }
