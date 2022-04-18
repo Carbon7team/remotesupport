@@ -1,4 +1,4 @@
-import {makeObservable, observable, action, computed } from "mobx-react-lite";
+import {makeObservable, observable, action, computed } from "mobx";
 import State from "./data/State";
 import Alarm from "./data/Alarm";
 import Measurement from "./data/Measurement";

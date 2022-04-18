@@ -4,7 +4,7 @@ import { useInstance } from "../../../../Utilities/useInstance";
 import MeasurementsAreaVM from "./MeasurementsAreaVM";
 
 const MeasurementsArea = observer(() => {
-
+// eslint-disable-next-line
     const {} = useInstance(new MeasurementsAreaVM(useStore()));
     
     return(

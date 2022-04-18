@@ -6,7 +6,9 @@ import { useInstance } from '../../../../Utilities/useInstance';
 import SideBarVM from './SidebarVM';
 import { useStore } from '../../../../Utilities/contextProvider';
 
-const Sidebar = observer(() => {
+const Sidebar = observer((props) => {
+
+  const {call, connectionDataChannel, peerTech} = props;
 
   const [audio, setAudio] = useState(true);
   const [video, setVideo] = useState(true);
@@ -22,9 +24,9 @@ const Sidebar = observer(() => {
   return (
       <div id="wrapper-sidebar">
         { audio ?
-          <Button className="volume-button" variant="contained"  startIcon={<VolumeUp fontSize="large"/>}  onClick={() => {setAudio(false); toggleAudio();}}/>
+          <Button className="audio-button" variant="contained"  startIcon={<VolumeUp fontSize="large"/>}  onClick={() => {setAudio(false); toggleAudio();}}/>
             :
-          <Button className="volume-button" variant="contained"  startIcon={<VolumeOff fontSize="large"/>}  onClick={() => {setAudio(true); toggleAudio();}}/>
+          <Button className="audio-button" variant="contained"  startIcon={<VolumeOff fontSize="large"/>}  onClick={() => {setAudio(true); toggleAudio();}}/>
         }
         { video ?
           <Button className="video-button" variant="contained"  startIcon={<Videocam fontSize="large"/>}  onClick={() => {setVideo(false); toggleVideo();}}/>
@@ -32,7 +34,7 @@ const Sidebar = observer(() => {
           <Button className="video-button" variant="contained"  startIcon={<VideocamOff fontSize="large"/>}  onClick={() => {setVideo(true); toggleVideo();}}/>
         }
         {callAccepted && !callEnded ? 
-          <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large" />}  onClick={() => { leaveCall(); }} className={classes.margin}>
+          <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large" />}  onClick={() => { leaveCall(call, connectionDataChannel, peerTech); }}>
             Hang Up
           </Button> 
             : 

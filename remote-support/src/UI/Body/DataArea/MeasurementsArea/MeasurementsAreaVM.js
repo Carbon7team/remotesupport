@@ -1,3 +1,5 @@
+import { makeAutoObservable } from "mobx";
+
 class MeasurementsAreaVM {
     constructor(rootstore){
         this.rootstore = rootstore;
@@ -20,8 +22,8 @@ class MeasurementsAreaVM {
             this.rootstore.datasetStore.measurementsFromJSON(JSON.parse(jsonData).measurements);
 
             return(
-                this.rootstore.datasetStore.measurements.forEach(
-                    alarm => { return(<li className={() => {alarm.severity === "Critical" ? "critical-item" : "warning-item"}}>{alarm.code}:{alarm.name}</li>)}
+                this.rootstore.datasetStore.measurements.batterymeasurements.forEach(
+                    alarm => <li className="battery-measurement">{alarm.code}:{alarm.name}</li>
                 )
             );
 

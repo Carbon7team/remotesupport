@@ -1,4 +1,5 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable } from "mobx";
+
 class StateUIStore {
     constructor(rootstore){
         this.rootstore = rootstore;
@@ -11,63 +12,68 @@ class StateUIStore {
         this.nameClient = null;
         this.surnameClient = null;
         this.companyClient = null;
+        this.requestReceived = false;
         this.peerTech = undefined;
-        this.avaibilityTech = false;
+        this.availabilityTech = false;
         this.filterValueAlarms = undefined;
         this.filterValueStates = undefined;
         this.filterValueMeasurements = undefined;
         makeAutoObservable(this,{rootstore: false})
     }
 
-    set setLogged(boolValue){
+    setLogged(boolValue){
         this.logged = boolValue;
     }
 
-    set setCallAccepted(boolValue){
+    setCallAccepted(boolValue){
         this.callAccepted = boolValue;
     }
 
-    set setCallEnded(boolValue){
+    setCallEnded(boolValue){
         this.callEnded = boolValue;
     }
 
-    set setStream(mediaStreamValue){
+    setStream(mediaStreamValue){
         this.stream = mediaStreamValue;
     }
 
-    set setJsonData(stringValue){
+    setJsonData(stringValue){
         this.jsonData = stringValue;
     }
 
-    set setIdUserClient(stringValue){
+    setIdUserClient(stringValue){
         this.idUserClient = stringValue;
     }
 
-    set setNameClient(stringValue){
+    setNameClient(stringValue){
         this.nameClient = stringValue;
     }
     
-    set setCompanyClient(stringValue){
+    setCompanyClient(stringValue){
         this.companyClient = stringValue;
     }
 
-    set setPeerTech(peerValue){
+    setRequestReceived(boolValue){
+        this.requestReceived = boolValue;
+    }
+
+    setPeerTech(peerValue){
         this.peerTech = peerValue;
     }
 
-    set setAvaiabilityTech(boolValue){
-        this.avaibilityTech = boolValue;
+    setAvailabilityTech(boolValue){
+        this.availabilityTech = boolValue;
     }
 
-    set setfilterValueAlarms(stringValue){
+    setfilterValueAlarms(stringValue){
         this.filterValueAlarms = stringValue;
     }
 
-    set setfilterValueStates(stringValue){
+    setfilterValueStates(stringValue){
         this.filterValueStates = stringValue;
     }
 
-    set setfilterValueMeasurements(stringValue){
+    setfilterValueMeasurements(stringValue){
         this.filterValueMeasurements = stringValue;
     }
 

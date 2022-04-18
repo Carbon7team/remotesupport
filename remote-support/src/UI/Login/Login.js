@@ -1,7 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useState } from 'react';
-import useInstance from '../../useInstance';
 import { useStore } from '../../Utilities/contextProvider';
+import { useInstance } from '../../Utilities/useInstance';
 import LoginVM from './LoginVM';
 
 

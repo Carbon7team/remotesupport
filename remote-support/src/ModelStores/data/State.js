@@ -1,11 +1,12 @@
-import makeAutoObservable from 'mobx-react-lite'
+import { makeAutoObservable } from "mobx";
+
 
 class State {
     constructor(code = "", name = "", active = false){
         this._code = code;
         this._name = name;
         this._active = active;
-        
+        makeAutoObservable(this);
     }
 
     get code(){

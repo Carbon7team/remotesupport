@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx-react-lite';
+import { makeAutoObservable } from 'mobx';
 
 class Measurement{
     constructor(code = "", name = "", value = NaN, type = ""){

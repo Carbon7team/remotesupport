@@ -16,7 +16,7 @@ const StatesArea = observer(() => {
             </div>
 
             <div>
-                //stampa dati
+                
             </div>
         </div>
     )

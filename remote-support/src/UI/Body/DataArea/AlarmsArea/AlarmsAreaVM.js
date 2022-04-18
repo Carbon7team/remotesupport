@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx-react-lite';
+import { makeAutoObservable } from 'mobx';
 
 export class AlarmsAreaVM {
 
@@ -22,7 +22,7 @@ export class AlarmsAreaVM {
 
             return(
                 this.rootstore.datasetStore.alarms.forEach(
-                    alarm => { return(<li className={() => {alarm.severity === "Critical" ? "critical-item" : "warning-item"}}>{alarm.code}:{alarm.name}</li>)}
+                    alarm => <li className={() => alarm.severity === "Critical" ? "critical-item" : "warning-item"}>{alarm.code}:{alarm.name}</li>
                 )
             );
 
@@ -42,7 +42,7 @@ export class AlarmsAreaVM {
             
             return(
                 this.rootstore.datasetStore.alarms.criticalAlarms.forEach(
-                    alarm => { return(<li className="critical-item">{alarm.code}:{alarm.name}</li>)}
+                    alarm => <li className="critical-item">{alarm.code}:{alarm.name}</li>
                 )
             );
 
@@ -59,7 +59,7 @@ export class AlarmsAreaVM {
             this.rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
             return(
                 this.rootstore.datasetStore.alarms.warningAlarms.forEach(
-                    alarm => { return(<li className="warning-item">{alarm.code}:{alarm.name}</li>)}
+                    alarm => <li className="warning-item">{alarm.code}:{alarm.name}</li>
                 )
             );
         } catch (error) {

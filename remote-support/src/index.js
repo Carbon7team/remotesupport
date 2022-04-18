@@ -1,17 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import Rootstore from './ModelStores/RootStore';
 import reportWebVitals from './reportWebVitals';
+import View from './UI/View';
 import { AppContextProvider } from './Utilities/contextProvider';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const RootStore = new Rootstore();
 
-root.render(
+ReactDOM.render(
     <AppContextProvider value={RootStore}>
-    <View />
-    </AppContextProvider>
+        <View/>
+    </AppContextProvider>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

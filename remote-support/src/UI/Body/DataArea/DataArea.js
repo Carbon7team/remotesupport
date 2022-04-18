@@ -5,41 +5,65 @@ import AlarmsArea from "./AlarmsArea/AlarmsArea";
 import StatesArea from "./StatesArea/StatesArea";
 import MeasurementsArea from "./MeasurementsArea/MeasurementsArea";
 import DataAreaVM from "./DataAreaVM";
+import { Button } from "@material-ui/core"
 
 
 
-const DataArea = observer(() => {
+const DataArea = observer((props) => {
+
+    const {sendCall} = props;
 
     const {
         callAccepted,
         callEnded,
-        avaiabilityTech
+        availabilityTech,
+        requestReceived,
+        idUserClient,
+        nameClient,
+        surnameClient,
+        companyClient,
+        declineCall
+
     } = useInstance(new DataAreaVM(useStore()));
 
     return(
         <div className='dataArea-wrapper'>
-            
-            { callAccepted && !callEnded && (
-            <div id="data-display">
-                <StatesArea/>
-                <AlarmsArea/>
-                <MeasurementsArea/>
-            </div>
-            )
-            }
-
-            { (!callAccepted || callEnded) && avaiabilityTech && (
-                <div id="waiting">
-                    Waiting for new request in...
-                </div>
-            )
+            {/* {console.log("Call Accepted: ", callAccepted)}
+            {console.log("Call Ended: ", callEnded)} */}
+            {
+                callAccepted && (!callEnded) && (
+                    <div id="data-display">
+                        <StatesArea/>
+                        <AlarmsArea/>
+                        <MeasurementsArea/>
+                    </div>
+                )
             }
 
             {
-                (!callAccepted || callEnded) && !avaiabilityTech && (
-                    <div id="not-avaiable">
-                        <h3>Not Avaiable for requests!</h3>
-                        <p>If you are free, you can modify your avaiability</p>
+                (!callAccepted) && callEnded && availabilityTech && (
+                    <div id="waiting">
+                        Waiting for new request down here:
+
+                        { requestReceived && (
+                        <div id="request">
+                            <p>{nameClient}</p>
+                            <p>{surnameClient}</p>
+                            <p>{companyClient}</p>
+                            <Button id="accept-button" onClick={sendCall(idUserClient)}>Accept</Button>
+                            <Button id="decline-button" onClick={declineCall}>Decline</Button>)
+                        </div>
+                        )}
+
+                    </div>
+                )
+            }
+
+            {
+                (!callAccepted) && callEnded && (!availabilityTech) && (
+                    <div id="not-available">
+                        <h3>Not Available for requests!</h3>
+                        <p>If you are free, you can modify your availability</p>
                     </div>
                 )
             }

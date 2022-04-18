@@ -8,7 +8,7 @@ import HeaderVM from './HeaderVM';
 const Header = observer(() => {
 
   const {
-    logged,
+    logged
   } = useInstance(new HeaderVM(useStore()));
 
   return(
@@ -16,10 +16,10 @@ const Header = observer(() => {
     <h1>Socomec Remote Support</h1>
     {logged && (
       <div id='wrapper-settings'>
-      <p>Avaiability</p>
-      <select name="avaiability">
-        <option>Avaiable</option>
-        <option>Not Avaiable</option>
+      <p>Availability</p>
+      <select name="availability">
+        <option>Available</option>
+        <option>Not Available</option>
       </select>
       <button>Logout</button>
       </div>

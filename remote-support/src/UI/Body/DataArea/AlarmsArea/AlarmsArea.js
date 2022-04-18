@@ -1,5 +1,7 @@
 import { observer } from "mobx-react-lite";
-import Select from "react-select/dist/declarations/src/Select";
+import Select from "react-select";
+import { useStore } from "../../../../Utilities/contextProvider";
+import { useInstance } from "../../../../Utilities/useInstance";
 import { AlarmsAreaVM } from "./AlarmsAreaVM";
 
 const AlarmsArea = observer(() => {
