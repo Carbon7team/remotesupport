@@ -1,6 +1,16 @@
 header{
+    display: flex;
+    flex-direction: row;
     background-color: #49b7aa;
     color: white;
     padding: 1em;
-    text-align: left;
+    justify-content: space-between;
+}
+
+#wrapper-settings {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }

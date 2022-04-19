@@ -15,3 +15,7 @@
     padding: 0.4em;
     color: #333;
 }
+
+fieldset {
+    padding: 1em 3em 1em 3em;
+}
