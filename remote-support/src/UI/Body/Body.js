@@ -5,6 +5,7 @@ import { useInstance } from "../../Utilities/useInstance";
 import BodyVM from "./BodyVM";
 import CallArea from "./CallArea/CallArea";
 import DataArea from "./DataArea/DataArea";
+import './Body.css';
 
 const Body = observer(() => {
 
