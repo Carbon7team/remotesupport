@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useInstance } from '../../Utilities/useInstance';
 import { useStore } from '../../Utilities/contextProvider';
 import HeaderVM from './HeaderVM';
+import './Header.css';
 
 
 const Header = observer(() => {

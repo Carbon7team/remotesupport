@@ -5,8 +5,8 @@ class SideBarVM {
     constructor(rootstore){
         this.rootstore = rootstore;
         this.stateUIStore = rootstore.stateUIStore;
-        this.callAccepted = stateUIStore.callAccepted;
-        this.callEnded = stateUIStore.callEnded;
+        this.callAccepted = rootstore.stateUIStore.callAccepted;
+        this.callEnded = rootstore.stateUIStore.callEnded;
         makeAutoObservable(this, {autoBind: true});
     }
 
