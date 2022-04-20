@@ -12,7 +12,8 @@ const AlarmsArea = observer(() => {
         renderWarningAlarms,
         options,
         handleChange,
-        filterValueAlarm,
+        filterValueAlarms,
+        jsonData
     } = useInstance(new AlarmsAreaVM(useStore()));
 
     return(
@@ -20,14 +21,14 @@ const AlarmsArea = observer(() => {
             <div className='title-wrapper'>
                 <h2>Alarms</h2>
                 <p>Filters:</p>
-                <Select id='filterAlarms' options={options} onChange={e => handleChange(e.target.value)}/>
+                <Select id='filterAlarms' options={options} defaultValue={options[0]} value={filterValueAlarms} onChange={handleChange}/>
             </div>
 
             <div className='data-wrapper'>
                 <ul>
-                    {filterValueAlarm === "All" ? renderAllAlarms : <></>}
-                    {filterValueAlarm === "Criticals" ? renderCriticalAlarms : <></>}
-                    {filterValueAlarm === "Warnings" ? renderWarningAlarms : <></>}
+                    {filterValueAlarms === "All" ? renderAllAlarms(jsonData) : <></>}
+                    {filterValueAlarms === "Criticals" ? renderCriticalAlarms(jsonData) : <></>}
+                    {filterValueAlarms === "Warnings" ? renderWarningAlarms(jsonData) : <></>}
                 </ul>
             </div>
         </div>

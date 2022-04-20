@@ -18,7 +18,7 @@ class StateUIStore {
         this.filterValueAlarms = undefined;
         this.filterValueStates = undefined;
         this.filterValueMeasurements = undefined;
-        makeAutoObservable(this,{rootstore: false})
+        makeAutoObservable(this, {rootstore: false});
     }
 
     setLogged(boolValue){
@@ -65,15 +65,15 @@ class StateUIStore {
         this.availabilityTech = boolValue;
     }
 
-    setfilterValueAlarms(stringValue){
+    setFilterValueAlarms(stringValue){
         this.filterValueAlarms = stringValue;
     }
 
-    setfilterValueStates(stringValue){
+    setFilterValueStates(stringValue){
         this.filterValueStates = stringValue;
     }
 
-    setfilterValueMeasurements(stringValue){
+    setFilterValueMeasurements(stringValue){
         this.filterValueMeasurements = stringValue;
     }
 
