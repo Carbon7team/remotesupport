@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Rootstore from './ModelStores/RootStore';
 import reportWebVitals from './reportWebVitals';
 import View from './UI/View';
+import './index.css'
 import { AppContextProvider } from './Utilities/contextProvider';
 
 const RootStore = new Rootstore();

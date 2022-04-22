@@ -1,0 +1,8 @@
+#wrapper-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #dfeae8;
+    border: black;
+}
