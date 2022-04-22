@@ -4,6 +4,7 @@ import { useStore } from '../../../Utilities/contextProvider';
 import { useInstance } from '../../../Utilities/useInstance';
 import CallAreaVM from './CallAreaVM';
 import Sidebar from './SideBar/Sidebar';
+import './CallArea.css'
 
 const CallArea = observer((props) => {
   

@@ -3,7 +3,7 @@ import { action, makeObservable, observable } from "mobx";
 class StateUIStore {
     constructor(rootstore){
         this.rootstore = rootstore;
-        this.logged = false;
+        this.logged = true;
         this.callAccepted = false;
         this.callEnded = true;
         this.stream = undefined;

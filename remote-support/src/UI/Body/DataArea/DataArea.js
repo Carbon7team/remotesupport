@@ -6,6 +6,7 @@ import StatesArea from "./StatesArea/StatesArea";
 import MeasurementsArea from "./MeasurementsArea/MeasurementsArea";
 import DataAreaVM from "./DataAreaVM";
 import { Button } from "@material-ui/core"
+import './DataArea.css'
 
 
 
