@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 class StateUIStore {
     constructor(rootstore){
@@ -18,7 +18,38 @@ class StateUIStore {
         this.filterValueAlarms = undefined;
         this.filterValueStates = undefined;
         this.filterValueMeasurements = undefined;
-        makeAutoObservable(this, {rootstore: false});
+        makeObservable(this, {
+            logged: observable,
+            callAccepted: observable,
+            callEnded: observable,
+            stream: observable,
+            jsonData: observable,
+            idUserClient: observable,
+            nameClient: observable,
+            surnameClient: observable,
+            companyClient: observable,
+            requestReceived: observable,
+            peerTech: observable,
+            availabilityTech: observable,
+            filterValueAlarms: observable,
+            filterValueStates: observable,
+            filterValueMeasurements: observable,
+            setLogged: action,
+            setCallAccepted: action,
+            setCallEnded: action,
+            setStream: action,
+            setJsonData: action,
+            setIdUserClient: action,
+            setNameClient: action,
+            setSurnameClient: action,
+            setCompanyClient: action,
+            setRequestReceived: action,
+            setPeerTech: action,
+            setAvailabilityTech: action,
+            setFilterValueAlarms: action,
+            setFilterValueStates: action,
+            setFilterValueMeasurements: action
+        });
     }
 
     setLogged(boolValue){
@@ -47,6 +78,10 @@ class StateUIStore {
 
     setNameClient(stringValue){
         this.nameClient = stringValue;
+    }
+
+    setSurnameClient(stringValue){
+        this.surnameClient = stringValue;
     }
     
     setCompanyClient(stringValue){
