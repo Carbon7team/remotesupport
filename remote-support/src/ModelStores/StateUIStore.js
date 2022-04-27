@@ -3,9 +3,9 @@ import { action, makeObservable, observable } from "mobx";
 class StateUIStore {
   constructor(rootstore) {
     this.rootstore = rootstore;
-    this.logged = false;
-    this.callAccepted = false;
-    this.callEnded = true;
+    this.logged = true;
+    this.callAccepted = true;
+    this.callEnded = false;
     this.jsonData = null;
     this.availabilityTech = false;
     makeObservable(this, {

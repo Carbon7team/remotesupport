@@ -1,12 +1,35 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../Utilities/contextProvider";
+import { useState } from "react";
+import Select from "react-select";
 import "./Header.css";
 
 const Header = observer(() => {
   const rootstore = useStore();
 
-  const { logged, callAccepted, callEnded } = rootstore.stateUIStore;
+  const { logged, callAccepted, callEnded, availabilityTech } = rootstore.stateUIStore;
+
+  const [localAvailable, setLocalAvailable] = useState({ 
+    value: "Available", 
+    label: "Available" });
+
+  const handleChange = (optionValue) => {
+
+    setLocalAvailable(optionValue);
+
+    if (localAvailable.value === "Available") {
+      rootstore.stateUIStore.setAvailabilityTech(true);
+    }
+    else {
+      rootstore.stateUIStore.setAvailabilityTech(false);
+    }
+  };
+
+  const availabilityOptions = [
+    { value: "Available", label: "Available" },
+    { value: "Not Available", label: "Not Available" }
+  ];
 
   return (
     <header>
@@ -14,10 +37,7 @@ const Header = observer(() => {
       {logged && (
         <div id="wrapper-settings">
           <p>Availability</p>
-          <select name="availability">
-            <option>Available</option>
-            <option>Not Available</option>
-          </select>
+          <Select id="availabilityBtn" options={availabilityOptions} value={availabilityTech} onChange={handleChange}/>
           <button>Logout</button>
         </div>
       )}
