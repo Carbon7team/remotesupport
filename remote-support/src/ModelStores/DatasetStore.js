@@ -48,7 +48,7 @@ class DatasetStore {
     }
 
     get batteryMeasurements(){
-        return this.measurements.filter(measurement => measurement.name === "battery");
+        return this.measurements.filter(measurement => measurement.code >= "M000" && measurement.code <= "M006"); // test
     }
 
     get inputMeasurements(){
@@ -110,11 +110,11 @@ class DatasetStore {
 
     measurementsFromJSON(jsonDataParsed){
 
-        this.measurements = jsonDataParsed.map(measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)});
+        this.measurements = jsonDataParsed.map(measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.unitOfMeasure)});
 
         // this.measurements.replace(
         //     obj.measurements.map(
-        //         measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.type)}
+        //         measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.unitOfMeasure)}
         //     )
         // );
 

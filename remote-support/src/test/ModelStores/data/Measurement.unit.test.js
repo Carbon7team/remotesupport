@@ -7,7 +7,7 @@ test("getters for a measurement all initialized", () => {
 	expect(measurement.code).toBe("Code");
 	expect(measurement.name).toBe("Name");
 	expect(measurement.value).toBe(50.4);
-    expect(measurement.type).toBe("V");
+    expect(measurement.unitOfMeasure).toBe("V");
     
 });
 
@@ -17,6 +17,6 @@ test("getters for a default measurement", () => {
 	expect(measurementDefault.code).toBe("");
 	expect(measurementDefault.name).toBe("");
 	expect(measurementDefault.value).toBe(NaN);
-    expect(measurementDefault.type).toBe("");
+    expect(measurementDefault.unitOfMeasure).toBe("");
 
 });

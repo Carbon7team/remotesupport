@@ -1,11 +1,11 @@
 import { makeAutoObservable } from 'mobx';
 
 class Measurement{
-    constructor(code = "", name = "", value = NaN, type = ""){
+    constructor(code = "", name = "", value = NaN, unitOfMeasure = ""){
         this._code = code;
         this._name = name;
         this._value = value;
-        this._type = type;
+        this._unitOfMeasure = unitOfMeasure;
         makeAutoObservable(this);
     }
 
@@ -21,8 +21,8 @@ class Measurement{
         return NaN ? null : this._value;
     }
 
-    get type(){
-        return this._type;
+    get unitOfMeasure(){
+        return this._unitOfMeasure;
     }
 }
 

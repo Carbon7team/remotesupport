@@ -1,75 +1,123 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../Utilities/contextProvider";
-import { useInstance } from "../../../Utilities/useInstance";
 import AlarmsArea from "./AlarmsArea/AlarmsArea";
 import StatesArea from "./StatesArea/StatesArea";
 import MeasurementsArea from "./MeasurementsArea/MeasurementsArea";
-import DataAreaVM from "./DataAreaVM";
-import { Button } from "@material-ui/core"
-import './DataArea.css'
-
-
+import { Button } from "@material-ui/core";
+import "./DataArea.css";
+import { useState } from "react";
+import Peer from "peerjs";
 
 const DataArea = observer((props) => {
+  const rootstore = useStore();
 
-    const {sendCall} = props;
+  const {
+    techVideo,
+    userVideo,
+    call,
+    connectionDataChannel,
+    peerTech,
+    idUserClient,
+    nameClient,
+    surnameClient,
+    companyClient,
+    requestReceived,
+  } = props.vars;
 
-    const {
-        callAccepted,
-        callEnded,
-        availabilityTech,
-        requestReceived,
-        idUserClient,
-        nameClient,
-        surnameClient,
-        companyClient,
-        declineCall
+  const {
+    setStream,
+    setIdUserClient,
+    setNameClient,
+    setSurnameClient,
+    setCompanyClient,
+    setRequestReceived,
+  } = props.setters;
 
-    } = useInstance(new DataAreaVM(useStore()));
+  const { callAccepted, callEnded, availabilityTech } = rootstore.stateUIStore;
 
-    return(
-        <div className='dataArea-wrapper'>
-            {/* {console.log("Call Accepted: ", callAccepted)}
-            {console.log("Call Ended: ", callEnded)} */}
-            {
-                callAccepted && (!callEnded) && (
-                    <div id="data-display">
-                        <StatesArea/>
-                        <AlarmsArea/>
-                        <MeasurementsArea/>
-                    </div>
-                )
-            }
+  const sendCall = (idUserClient) => {
+    const peer = new Peer("tecnico1" /* var con username del tecnico */, {
+      host: "localhost",
+      port: 9000,
+      path: "/myapp",
+    });
 
-            {
-                (!callAccepted) && callEnded && availabilityTech && (
-                    <div id="waiting">
-                        Waiting for new request down here:
+    rootstore.stateUIStore.setCallAccepted(true);
+    rootstore.stateUIStore.setCallEnded(false);
 
-                        { requestReceived && (
-                        <div id="request">
-                            <p>{nameClient}</p>
-                            <p>{surnameClient}</p>
-                            <p>{companyClient}</p>
-                            <Button id="accept-button" onClick={sendCall(idUserClient)}>Accept</Button>
-                            <Button id="decline-button" onClick={declineCall}>Decline</Button>)
-                        </div>
-                        )}
+    peerTech.current = peer;
 
-                    </div>
-                )
-            }
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((mediaStream) => {
+        setStream(mediaStream);
 
-            {
-                (!callAccepted) && callEnded && (!availabilityTech) && (
-                    <div id="not-available">
-                        <h3>Not Available for requests!</h3>
-                        <p>If you are free, you can modify your availability</p>
-                    </div>
-                )
-            }
+        techVideo.current.srcObject = mediaStream;
+        techVideo.current.play();
+
+        call = peerTech.current.call(idUserClient, mediaStream);
+
+        call.on("stream", (remoteStream) => {
+          userVideo.current.srcObject = remoteStream;
+          userVideo.current.play();
+        });
+      });
+
+    connectionDataChannel = peer.connect(idUserClient);
+
+    connectionDataChannel.on("open", () => {
+      connectionDataChannel.on("data", function (data) {
+        rootstore.stateUIStore.setJsonData(JSON.stringify(data)); // setting string JSON to stamp later
+      });
+    });
+  };
+
+  const declineCall = () => {
+    setRequestReceived(false);
+    setIdUserClient(null);
+    setNameClient(null);
+    setSurnameClient(null);
+    setCompanyClient(null);
+  };
+
+  return (
+    <div className="dataArea-wrapper">
+      {callAccepted && !callEnded && (
+        <div id="data-display">
+          <StatesArea />
+          <AlarmsArea />
+          <MeasurementsArea />
         </div>
-    )
-})
+      )}
+
+      {!callAccepted && callEnded && availabilityTech && (
+        <div id="waiting">
+          Waiting for new request down here:
+          {requestReceived && (
+            <div id="request">
+              <p>{nameClient}</p>
+              <p>{surnameClient}</p>
+              <p>{companyClient}</p>
+              <Button id="accept-button" onClick={sendCall(idUserClient)}>
+                Accept
+              </Button>
+              <Button id="decline-button" onClick={declineCall}>
+                Decline
+              </Button>
+              )
+            </div>
+          )}
+        </div>
+      )}
+
+      {!callAccepted && callEnded && !availabilityTech && (
+        <div id="not-available">
+          <h3>Not Available for requests!</h3>
+          <p>If you are free, you can modify your availability</p>
+        </div>
+      )}
+    </div>
+  );
+});
 
 export default DataArea;
