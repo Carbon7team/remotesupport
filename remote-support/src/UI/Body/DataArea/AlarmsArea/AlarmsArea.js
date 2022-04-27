@@ -21,7 +21,6 @@ const AlarmsArea = observer(() => {
 
   const handleChange = (optionValue) => {
     setFilterValueAlarms(optionValue);
-    console.log(optionValue);
   };
 
   const renderAllAlarms = (jsonData) => {
@@ -85,7 +84,6 @@ const AlarmsArea = observer(() => {
           onChange={handleChange}
         />
       </div>
-
       <div className="data-wrapper">
         <ul>
           {filterValueAlarms.value === "All" && renderAllAlarms(jsonData)}

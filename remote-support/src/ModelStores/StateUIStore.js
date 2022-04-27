@@ -7,18 +7,21 @@ class StateUIStore {
     this.callAccepted = true;
     this.callEnded = false;
     this.jsonData = null;
-    this.availabilityTech = false;
+    this.availabilityTech = true;
+    this.selectAvailability = { value: "Available", label: "Available" };
     makeObservable(this, {
       logged: observable,
       callAccepted: observable,
       callEnded: observable,
       jsonData: observable,
       availabilityTech: observable,
+      selectAvailability: observable,
       setLogged: action,
       setCallAccepted: action,
       setCallEnded: action,
       setJsonData: action,
       setAvailabilityTech: action,
+      setSelectAvailability: action,
     });
   }
 
@@ -40,6 +43,10 @@ class StateUIStore {
 
   setAvailabilityTech(boolValue) {
     this.availabilityTech = boolValue;
+  }
+
+  setSelectAvailability(stringValues) {
+    this.selectAvailability = stringValues;
   }
 }
 
