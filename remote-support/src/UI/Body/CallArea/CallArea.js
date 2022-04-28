@@ -2,29 +2,23 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import Sidebar from "./SideBar/Sidebar";
 import "./CallArea.css";
+import { useStore } from "../../../Utilities/contextProvider";
 
 const CallArea = observer((props) => {
-  const {
-    stream,
-    techVideo,
-    userVideo,
-    call,
-    connectionDataChannel,
-    peerTech,
-  } = props.vars;
+  const rootstore = useStore();
+  const { techVideo, userVideo, call, connectionDataChannel, peerTech } =
+    props.vars;
 
-  const { setStream } = props.setters;
+  const { callAccepted, callEnded } = rootstore.stateUIStore;
 
-  const settersSidebar = { setStream };
-
-  const varsSidebar = { stream, call, connectionDataChannel, peerTech };
+  const varsSidebar = { call, connectionDataChannel, peerTech };
 
   return (
     <div id="wrapper-callarea">
       <h2>Video Chat</h2>
 
       <video id="tech-video" playsInline ref={techVideo} autoPlay />
-      {stream && <Sidebar setters={settersSidebar} vars={varsSidebar} />}
+      {callAccepted && !callEnded && <Sidebar vars={varsSidebar} />}
       <video id="user-video" playsInline ref={userVideo} autoPlay />
     </div>
   );

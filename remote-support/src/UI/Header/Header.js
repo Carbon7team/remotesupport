@@ -13,6 +13,7 @@ const Header = observer(() => {
   const handleChange = (optionValue) => {
     rootstore.stateUIStore.setSelectAvailability(optionValue);
 
+    // chiamata http
     if (rootstore.stateUIStore.selectAvailability.value === "Available") {
       rootstore.stateUIStore.setAvailabilityTech(true);
     } else {
@@ -26,7 +27,7 @@ const Header = observer(() => {
   ];
 
   return (
-    <header>
+    <div id="header-wrapper">
       <h1>Socomec Remote Support</h1>
       {logged && (
         <div id="wrapper-settings">
@@ -42,7 +43,7 @@ const Header = observer(() => {
           <button>Logout</button>
         </div>
       )}
-    </header>
+    </div>
   );
 });
 

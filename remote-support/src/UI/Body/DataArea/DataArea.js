@@ -5,33 +5,24 @@ import StatesArea from "./StatesArea/StatesArea";
 import MeasurementsArea from "./MeasurementsArea/MeasurementsArea";
 import { Button } from "@material-ui/core";
 import "./DataArea.css";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Peer from "peerjs";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:4000";
 
 const DataArea = observer((props) => {
   const rootstore = useStore();
 
-  const {
-    techVideo,
-    userVideo,
-    call,
-    connectionDataChannel,
-    peerTech,
-    idUserClient,
-    nameClient,
-    surnameClient,
-    companyClient,
-    requestReceived,
-  } = props.vars;
+  let call = useRef(null);
+  let connectionDataChannel = useRef(null);
 
-  const {
-    setStream,
-    setIdUserClient,
-    setNameClient,
-    setSurnameClient,
-    setCompanyClient,
-    setRequestReceived,
-  } = props.setters;
+  const [idUserClient, setIdUserClient] = useState(null);
+  const [nameClient, setNameClient] = useState(null);
+  const [surnameClient, setSurnameClient] = useState(null);
+  const [companyClient, setCompanyClient] = useState(null);
+  const [requestReceived, setRequestReceived] = useState(false);
+
+  const { techVideo, userVideo, peerTech } = props.vars;
 
   const { callAccepted, callEnded, availabilityTech } = rootstore.stateUIStore;
 
@@ -50,7 +41,7 @@ const DataArea = observer((props) => {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((mediaStream) => {
-        setStream(mediaStream);
+        rootstore.stateUIStore.setStreamTech(mediaStream);
 
         techVideo.current.srcObject = mediaStream;
         techVideo.current.play();
@@ -79,6 +70,33 @@ const DataArea = observer((props) => {
     setSurnameClient(null);
     setCompanyClient(null);
   };
+
+  const setDataRequestClient = () => {
+    const socket = socketIOClient(ENDPOINT);
+
+    socket.send({
+      idTech: "tecnico1",
+    });
+
+    socket.on("message", (data) => {
+      if (data.identification === "virtualDisplay") {
+        if (data.type === "chiamata") {
+          setNameClient(data.name);
+          setSurnameClient(data.surname);
+          setCompanyClient(data.company);
+          setIdUserClient(data.idUserClient);
+          setRequestReceived(true);
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (availabilityTech && requestReceived) {
+      setDataRequestClient();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="dataArea-wrapper">

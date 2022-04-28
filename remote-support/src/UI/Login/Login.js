@@ -22,7 +22,12 @@ const Login = observer(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = await loginFetch(username, password);
+    const response = await loginFetch(username, password);
+    if (response.token) {
+      rootstore.stateUIStore.setLogged(true);
+      rootstore.stateUIStore.setIdTech(response.user);
+      rootstore.stateUIStore.setTokenAuth(response.token);
+    }
     // if (token) {
     //   rootstore.stateUIStore.setLogged(true);
     // }

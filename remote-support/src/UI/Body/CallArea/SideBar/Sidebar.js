@@ -13,23 +13,21 @@ import { useStore } from "../../../../Utilities/contextProvider";
 const Sidebar = observer((props) => {
   const rootstore = useStore();
 
-  const { stream, call, connectionDataChannel, peerTech } = props.vars;
+  const { call, connectionDataChannel, peerTech } = props.vars;
 
-  const { setStream } = props.setters;
-
-  const { callAccepted, callEnded } = rootstore.stateUIStore;
+  const { streamTech } = rootstore.stateUIStore;
 
   const [audio, setAudio] = useState(true);
   const [video, setVideo] = useState(true);
 
   const toggleAudio = () => {
-    stream
+    streamTech
       .getAudioTracks()
       .forEach((track) => (track.enabled = !track.enabled));
   };
 
   const toggleVideo = () => {
-    stream
+    streamTech
       .getVideoTracks()
       .forEach((track) => (track.enabled = !track.enabled));
   };
@@ -37,7 +35,7 @@ const Sidebar = observer((props) => {
   const leaveCall = () => {
     rootstore.stateUIStore.setCallEnded(true);
     rootstore.stateUIStore.setCallAccepted(false);
-    setStream(undefined);
+    rootstore.stateUIStore.setStreamTech(undefined);
     rootstore.stateUIStore.setJsonData(undefined);
     call.close();
     connectionDataChannel.close();
@@ -88,18 +86,17 @@ const Sidebar = observer((props) => {
           }}
         />
       )}
-      {callAccepted && !callEnded && (
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<PhoneDisabled fontSize="large" />}
-          onClick={() => {
-            leaveCall();
-          }}
-        >
-          Hang Up
-        </Button>
-      )}
+
+      <Button
+        variant="contained"
+        color="secondary"
+        startIcon={<PhoneDisabled fontSize="large" />}
+        onClick={() => {
+          leaveCall();
+        }}
+      >
+        Hang Up
+      </Button>
     </div>
   );
 });
