@@ -59,13 +59,13 @@ const DataArea = observer((props) => {
     connectionDataChannel.on("open", () => {
       connectionDataChannel.on("data", function (data) {
         // setting arrays to stamp later
-        rootstore.dataSetStore.alarmsFromJSON(
+        rootstore.datasetStore.alarmsFromJSON(
           JSON.parse(JSON.stringify(data)).states
         );
-        rootstore.dataSetStore.alarmsFromJSON(
+        rootstore.datasetStore.alarmsFromJSON(
           JSON.parse(JSON.stringify(data)).alarms
         );
-        rootstore.dataSetStore.alarmsFromJSON(
+        rootstore.datasetStore.alarmsFromJSON(
           JSON.parse(JSON.stringify(data)).measurements
         );
       });
@@ -111,9 +111,9 @@ const DataArea = observer((props) => {
     <div className="dataArea-wrapper">
       {callAccepted && !callEnded && (
         <div id="data-display">
-          <StatesArea />
+          {/* <StatesArea /> */}
           <AlarmsArea />
-          <MeasurementsArea />
+          {/* <MeasurementsArea /> */}
         </div>
       )}
 

@@ -36,9 +36,9 @@ const Sidebar = observer((props) => {
     rootstore.stateUIStore.setCallEnded(true);
     rootstore.stateUIStore.setCallAccepted(false);
     rootstore.stateUIStore.setStreamTech(undefined);
-    rootstore.dataSetStore.resetStates();
-    rootstore.dataSetStore.resetAlarms();
-    rootstore.dataSetStore.resetMeasurements();
+    rootstore.datasetStore.resetStates();
+    rootstore.datasetStore.resetAlarms();
+    rootstore.datasetStore.resetMeasurements();
     call.close();
     connectionDataChannel.close();
     peerTech.destroy();
