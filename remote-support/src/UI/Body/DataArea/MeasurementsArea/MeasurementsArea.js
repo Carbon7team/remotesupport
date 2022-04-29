@@ -11,7 +11,6 @@ const MeasurementsArea = observer(() => {
     { value: "Input", label: "Input" },
     { value: "Output", label: "Output" },
     { value: "Bypass", label: "Bypass" },
-    { value: "Inverter", label: "Inverter" },
   ];
 
   const [filterValueMeasurements, setFilterValueMeasurements] = useState({
@@ -19,22 +18,20 @@ const MeasurementsArea = observer(() => {
     label: "Battery",
   });
 
-  const { jsonData } = rootstore.stateUIStore;
-
   const handleChange = (optionValue) => {
     setFilterValueMeasurements(optionValue);
   };
 
-  const renderBatteryMeasurements = (jsonData) => {
+  const renderBatteryMeasurements = () => {
     try {
-      rootstore.datasetStore.measurementsFromJSON(
-        JSON.parse(jsonData).measurements
-      );
+      // rootstore.datasetStore.measurementsFromJSON(
+      //   JSON.parse(jsonData).measurements
+      // );
 
-      return rootstore.datasetStore.measurements.batteryMeasurements.forEach(
+      return rootstore.datasetStore.batteryMeasurements.forEach(
         (measurement) => (
           <li className="battery-measurement">
-            {measurement.code}:{measurement.value}
+            {measurement.name}:{measurement.value}
             {measurement.unitOfMeasure}
           </li>
         )
@@ -45,33 +42,31 @@ const MeasurementsArea = observer(() => {
     }
   };
 
-  const renderInputMeasurements = (jsonData) => {
+  const renderInputMeasurements = () => {
     try {
-      rootstore.datasetStore.measurementsFromJSON(
-        JSON.parse(jsonData).measurements
-      );
+      // rootstore.datasetStore.measurementsFromJSON(
+      //   JSON.parse(jsonData).measurements
+      // );
 
-      return rootstore.datasetStore.measurements.inputMeasurements.forEach(
-        (measurement) => (
-          <li className="input-measurement">
-            {measurement.code}:{measurement.value}
-            {measurement.unitOfMeasure}
-          </li>
-        )
-      );
+      return rootstore.datasetStore.inputMeasurements.forEach((measurement) => (
+        <li className="input-measurement">
+          {measurement.code}:{measurement.value}
+          {measurement.unitOfMeasure}
+        </li>
+      ));
     } catch (error) {
       rootstore.datasetStore.resetMeasurements();
       return <p>Data not available!</p>;
     }
   };
 
-  const renderOutputMeasurements = (jsonData) => {
+  const renderOutputMeasurements = () => {
     try {
-      rootstore.datasetStore.measurementsFromJSON(
-        JSON.parse(jsonData).measurements
-      );
+      // rootstore.datasetStore.measurementsFromJSON(
+      //   JSON.parse(jsonData).measurements
+      // );
 
-      return rootstore.datasetStore.measurements.outputMeasurements.forEach(
+      return rootstore.datasetStore.outputMeasurements.forEach(
         (measurement) => (
           <li className="output-measurement">
             {measurement.code}:{measurement.value}
@@ -85,35 +80,15 @@ const MeasurementsArea = observer(() => {
     }
   };
 
-  const renderBypassMeasurements = (jsonData) => {
+  const renderBypassMeasurements = () => {
     try {
-      rootstore.datasetStore.measurementsFromJSON(
-        JSON.parse(jsonData).measurements
-      );
+      // rootstore.datasetStore.measurementsFromJSON(
+      //   JSON.parse(jsonData).measurements
+      // );
 
-      return rootstore.datasetStore.measurements.bypassMeasurements.forEach(
+      return rootstore.datasetStore.bypassMeasurements.forEach(
         (measurement) => (
           <li className="bypass-measurement">
-            {measurement.code}:{measurement.value}
-            {measurement.unitOfMeasure}
-          </li>
-        )
-      );
-    } catch (error) {
-      rootstore.datasetStore.resetMeasurements();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderInverterMeasurements = (jsonData) => {
-    try {
-      rootstore.datasetStore.measurementsFromJSON(
-        JSON.parse(jsonData).measurements
-      );
-
-      return rootstore.datasetStore.measurements.inverterMeasurements.forEach(
-        (measurement) => (
-          <li className="inverter-measurement">
             {measurement.code}:{measurement.value}
             {measurement.unitOfMeasure}
           </li>
@@ -142,15 +117,12 @@ const MeasurementsArea = observer(() => {
       <div className="data-wrapper">
         <ul>
           {filterValueMeasurements.value === "Battery" &&
-            renderBatteryMeasurements(jsonData)}
-          {filterValueMeasurements.value === "Input" &&
-            renderInputMeasurements(jsonData)}
+            renderBatteryMeasurements}
+          {filterValueMeasurements.value === "Input" && renderInputMeasurements}
           {filterValueMeasurements.value === "Output" &&
-            renderOutputMeasurements(jsonData)}
+            renderOutputMeasurements}
           {filterValueMeasurements.value === "Bypass" &&
-            renderBypassMeasurements(jsonData)}
-          {filterValueMeasurements.value === "Inverter" &&
-            renderInverterMeasurements(jsonData)}
+            renderBypassMeasurements}
         </ul>
       </div>
     </div>

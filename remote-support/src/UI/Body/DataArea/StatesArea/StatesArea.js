@@ -16,15 +16,13 @@ const StatesArea = observer(() => {
     label: "All",
   });
 
-  const { jsonData } = rootstore.stateUIStore;
-
   const handleChange = (optionValue) => {
     setFilterValueStates(optionValue);
   };
 
-  const renderAllStates = (jsonData) => {
+  const renderAllStates = () => {
     try {
-      rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
+      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
 
       return rootstore.datasetStore.states.forEach((state) => (
         <li
@@ -41,9 +39,9 @@ const StatesArea = observer(() => {
     }
   };
 
-  const renderActiveStates = (jsonData) => {
+  const renderActiveStates = () => {
     try {
-      rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
+      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
 
       return rootstore.datasetStore.states.activeStates.forEach((state) => (
         <li className="active-item">
@@ -56,9 +54,9 @@ const StatesArea = observer(() => {
     }
   };
 
-  const renderNotActiveStates = (jsonData) => {
+  const renderNotActiveStates = () => {
     try {
-      rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
+      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
 
       return rootstore.datasetStore.states.notActiveStates.forEach((state) => (
         <li className="not-active-item">
@@ -85,10 +83,9 @@ const StatesArea = observer(() => {
 
       <div className="data-wrapper">
         <ul>
-          {filterValueStates.value === "All" && renderAllStates(jsonData)}
-          {filterValueStates.value === "Active" && renderActiveStates(jsonData)}
-          {filterValueStates.value === "Not Active" &&
-            renderNotActiveStates(jsonData)}
+          {filterValueStates.value === "All" && renderAllStates}
+          {filterValueStates.value === "Active" && renderActiveStates}
+          {filterValueStates.value === "Not Active" && renderNotActiveStates}
         </ul>
       </div>
     </div>

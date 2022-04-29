@@ -58,7 +58,16 @@ const DataArea = observer((props) => {
 
     connectionDataChannel.on("open", () => {
       connectionDataChannel.on("data", function (data) {
-        rootstore.stateUIStore.setJsonData(JSON.stringify(data)); // setting string JSON to stamp later
+        // setting arrays to stamp later
+        rootstore.dataSetStore.alarmsFromJSON(
+          JSON.parse(JSON.stringify(data)).states
+        );
+        rootstore.dataSetStore.alarmsFromJSON(
+          JSON.parse(JSON.stringify(data)).alarms
+        );
+        rootstore.dataSetStore.alarmsFromJSON(
+          JSON.parse(JSON.stringify(data)).measurements
+        );
       });
     });
   };
@@ -116,10 +125,20 @@ const DataArea = observer((props) => {
               <p>{nameClient}</p>
               <p>{surnameClient}</p>
               <p>{companyClient}</p>
-              <Button id="accept-button" onClick={sendCall(idUserClient)}>
+              <Button
+                id="accept-button"
+                onClick={() => {
+                  sendCall(idUserClient);
+                }}
+              >
                 Accept
               </Button>
-              <Button id="decline-button" onClick={declineCall}>
+              <Button
+                id="decline-button"
+                onClick={() => {
+                  declineCall();
+                }}
+              >
                 Decline
               </Button>
               )

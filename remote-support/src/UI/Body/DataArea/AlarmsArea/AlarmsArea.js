@@ -17,15 +17,15 @@ const AlarmsArea = observer(() => {
     label: "All",
   });
 
-  const { jsonData } = rootstore.stateUIStore;
-
   const handleChange = (optionValue) => {
     setFilterValueAlarms(optionValue);
   };
 
-  const renderAllAlarms = (jsonData) => {
+  const renderAllAlarms = () => {
     try {
-      rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
+      // console.log(1);
+      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
+      // console.log(2);
 
       return rootstore.datasetStore.alarms.forEach((alarm) => (
         <li
@@ -42,11 +42,11 @@ const AlarmsArea = observer(() => {
     }
   };
 
-  const renderCriticalAlarms = (jsonData) => {
+  const renderCriticalAlarms = () => {
     try {
-      rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
+      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
 
-      return rootstore.datasetStore.alarms.criticalAlarms.forEach((alarm) => (
+      return rootstore.datasetStore.criticalAlarms.forEach((alarm) => (
         <li className="critical-item">
           {alarm.code}: {alarm.name}
         </li>
@@ -57,10 +57,11 @@ const AlarmsArea = observer(() => {
     }
   };
 
-  const renderWarningAlarms = (jsonData) => {
+  const renderWarningAlarms = () => {
     try {
-      rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
-      return rootstore.datasetStore.alarms.warningAlarms.forEach((alarm) => (
+      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
+
+      return rootstore.datasetStore.warningAlarms.forEach((alarm) => (
         <li className="warning-item">
           {alarm.code}: {alarm.name}
         </li>
@@ -86,11 +87,9 @@ const AlarmsArea = observer(() => {
       </div>
       <div className="data-wrapper">
         <ul>
-          {filterValueAlarms.value === "All" && renderAllAlarms(jsonData)}
-          {filterValueAlarms.value === "Criticals" &&
-            renderCriticalAlarms(jsonData)}
-          {filterValueAlarms.value === "Warnings" &&
-            renderWarningAlarms(jsonData)}
+          {filterValueAlarms.value === "All" && renderAllAlarms}
+          {filterValueAlarms.value === "Criticals" && renderCriticalAlarms}
+          {filterValueAlarms.value === "Warnings" && renderWarningAlarms}
         </ul>
       </div>
     </div>

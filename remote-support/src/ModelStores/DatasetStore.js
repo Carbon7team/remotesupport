@@ -21,7 +21,6 @@ class DatasetStore {
       inputMeasurements: computed,
       outputMeasurements: computed,
       bypassMeasurements: computed,
-      inverterMeasurements: computed,
       statesFromJSON: action,
       alarmsFromJSON: action,
       measurementsFromJSON: action,
@@ -40,40 +39,40 @@ class DatasetStore {
   }
 
   get criticalAlarms() {
-    return this.alarms.filter((alarm) => alarm.severity === "critical");
+    return this.alarms.filter((alarm) => alarm.severity === "Critical");
   }
 
   get warningAlarms() {
-    return this.alarms.filter((alarm) => alarm.severity === "warning");
+    return this.alarms.filter((alarm) => alarm.severity === "Warning");
   }
 
   get batteryMeasurements() {
     return this.measurements.filter(
-      (measurement) => measurement.code >= "M000" && measurement.code <= "M006"
+      (measurement) => measurement.code >= "M015" && measurement.code <= "M031"
     ); // test
   }
 
   get inputMeasurements() {
     return this.measurements.filter(
-      (measurement) => measurement.name === "input"
+      (measurement) =>
+        (measurement.code >= "M032" && measurement.code <= "M038") ||
+        (measurement.code >= "M064" && measurement.code <= "M069")
     );
   }
 
   get outputMeasurements() {
     return this.measurements.filter(
-      (measurement) => measurement.name === "output"
+      (measurement) =>
+        (measurement.code >= "M000" && measurement.code <= "M014") ||
+        (measurement.code >= "M048" && measurement.code <= "M063")
     );
   }
 
   get bypassMeasurements() {
     return this.measurements.filter(
-      (measurement) => measurement.name === "bypass"
-    );
-  }
-
-  get inverterMeasurements() {
-    return this.measurements.filter(
-      (measurement) => measurement.name === "inverter"
+      (measurement) =>
+        (measurement.code >= "M039" && measurement.code <= "M045") ||
+        (measurement.code >= "M070" && measurement.code <= "M075")
     );
   }
 
@@ -92,48 +91,30 @@ class DatasetStore {
   statesFromJSON(jsonDataParsed) {
     this.states.replace(
       jsonDataParsed.map((state) => {
-        return new State(state._code, state._name, state._active);
+        return new State(state.code, state.name, state.active);
       })
-    ); //prova
-
-    // this.states.replace(
-    //     obj.status.map(
-    //         state => {return new State(state.code, state.name, state.active)}
-    //     )
-    // );
+    );
   }
 
   alarmsFromJSON(jsonDataParsed) {
-    // var obj = JSON.parse(jsonData);
-
-    // map or for Each ?
-
-    this.alarms = jsonDataParsed.map((alarm) => {
-      return new Alarm(alarm.code, alarm.name, alarm.severity);
-    });
-
-    // this.alarms.replace(
-    //     obj.alarms.map(
-    //         alarm => {return new Alarm(alarm.code, alarm.name, alarm.severity)}
-    //     )
-    // );
+    this.alarms.replace(
+      jsonDataParsed.map((alarm) => {
+        return new Alarm(alarm.code, alarm.name, alarm.severity);
+      })
+    );
   }
 
   measurementsFromJSON(jsonDataParsed) {
-    this.measurements = jsonDataParsed.map((measurement) => {
-      return new Measurement(
-        measurement.code,
-        measurement.name,
-        measurement.value,
-        measurement.unitOfMeasure
-      );
-    });
-
-    // this.measurements.replace(
-    //     obj.measurements.map(
-    //         measurement => {return new Measurement(measurement.code, measurement.name, measurement.value, measurement.unitOfMeasure)}
-    //     )
-    // );
+    this.measurements.replace(
+      jsonDataParsed.map((measurement) => {
+        return new Measurement(
+          measurement.code,
+          measurement.name,
+          measurement.value,
+          measurement.unitOfMeasure
+        );
+      })
+    );
   }
 }
 
