@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import Select from "react-select";
-import { useStore } from "../../../../Utilities/contextProvider";
+import RenderAllAlarms from "./RenderAllAlarms";
+import RenderCriticalAlarms from "./RenderCriticalAlarms";
+import RenderWarningAlarms from "./RenderWarningAlarms";
 
 const AlarmsArea = observer(() => {
-  const rootstore = useStore();
-
   const options = [
     { value: "All", label: "All" },
     { value: "Criticals", label: "Criticals" },
@@ -19,57 +19,6 @@ const AlarmsArea = observer(() => {
 
   const handleChange = (optionValue) => {
     setFilterValueAlarms(optionValue);
-  };
-
-  const renderAllAlarms = () => {
-    try {
-      // console.log(1);
-      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
-      // console.log(2);
-
-      return rootstore.datasetStore.alarms.forEach((alarm) => (
-        <li
-          className={() =>
-            alarm.severity === "Critical" ? "critical-item" : "warning-item"
-          }
-        >
-          {alarm.code}: {alarm.name}
-        </li>
-      ));
-    } catch (error) {
-      rootstore.datasetStore.resetAlarms();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderCriticalAlarms = () => {
-    try {
-      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
-
-      return rootstore.datasetStore.criticalAlarms.forEach((alarm) => (
-        <li className="critical-item">
-          {alarm.code}: {alarm.name}
-        </li>
-      ));
-    } catch (error) {
-      rootstore.datasetStore.resetAlarms();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderWarningAlarms = () => {
-    try {
-      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).alarms);
-
-      return rootstore.datasetStore.warningAlarms.forEach((alarm) => (
-        <li className="warning-item">
-          {alarm.code}: {alarm.name}
-        </li>
-      ));
-    } catch (error) {
-      rootstore.datasetStore.resetAlarms();
-      return <p>Data not available!</p>;
-    }
   };
 
   return (
@@ -87,9 +36,9 @@ const AlarmsArea = observer(() => {
       </div>
       <div className="data-wrapper">
         <ul>
-          {filterValueAlarms.value === "All" && renderAllAlarms}
-          {filterValueAlarms.value === "Criticals" && renderCriticalAlarms}
-          {filterValueAlarms.value === "Warnings" && renderWarningAlarms}
+          {filterValueAlarms.value === "All" && <RenderAllAlarms />}
+          {filterValueAlarms.value === "Criticals" && <RenderCriticalAlarms />}
+          {filterValueAlarms.value === "Warnings" && <RenderWarningAlarms />}
         </ul>
       </div>
     </div>

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../../../Utilities/contextProvider";
 import Select from "react-select";
+import RenderAllStates from "./RenderAllStates";
+import RenderActiveStates from "./RenderActiveStates";
+import RenderNotActiveStates from "./RenderNotActiveStates";
 
 const StatesArea = observer(() => {
-  const rootstore = useStore();
   const options = [
     { value: "All", label: "All" },
     { value: "Active", label: "Active" },
@@ -20,54 +21,6 @@ const StatesArea = observer(() => {
     setFilterValueStates(optionValue);
   };
 
-  const renderAllStates = () => {
-    try {
-      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
-
-      return rootstore.datasetStore.states.forEach((state) => (
-        <li
-          className={() =>
-            state.active === true ? "active-item" : "not-active-item"
-          }
-        >
-          {state.code}: {state.name}
-        </li>
-      ));
-    } catch (error) {
-      rootstore.datasetStore.resetStates();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderActiveStates = () => {
-    try {
-      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
-
-      return rootstore.datasetStore.states.activeStates.forEach((state) => (
-        <li className="active-item">
-          {state.code}: {state.name}
-        </li>
-      ));
-    } catch (error) {
-      rootstore.datasetStore.resetStates();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderNotActiveStates = () => {
-    try {
-      // rootstore.datasetStore.alarmsFromJSON(JSON.parse(jsonData).states);
-
-      return rootstore.datasetStore.states.notActiveStates.forEach((state) => (
-        <li className="not-active-item">
-          {state.code}: {state.name}
-        </li>
-      ));
-    } catch (error) {
-      rootstore.datasetStore.resetStates();
-      return <p>Data not available!</p>;
-    }
-  };
   return (
     <div className="container-wrapper">
       <div className="title-wrapper">
@@ -83,9 +36,11 @@ const StatesArea = observer(() => {
 
       <div className="data-wrapper">
         <ul>
-          {filterValueStates.value === "All" && renderAllStates}
-          {filterValueStates.value === "Active" && renderActiveStates}
-          {filterValueStates.value === "Not Active" && renderNotActiveStates}
+          {filterValueStates.value === "All" && <RenderAllStates />}
+          {filterValueStates.value === "Active" && <RenderActiveStates />}
+          {filterValueStates.value === "Not Active" && (
+            <RenderNotActiveStates />
+          )}
         </ul>
       </div>
     </div>

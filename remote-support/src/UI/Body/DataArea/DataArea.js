@@ -111,9 +111,9 @@ const DataArea = observer((props) => {
     <div className="dataArea-wrapper">
       {callAccepted && !callEnded && (
         <div id="data-display">
-          {/* <StatesArea /> */}
+          <StatesArea />
           <AlarmsArea />
-          {/* <MeasurementsArea /> */}
+          <MeasurementsArea />
         </div>
       )}
 

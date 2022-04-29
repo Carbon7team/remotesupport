@@ -1,12 +1,15 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import Select from "react-select";
-import { useStore } from "../../../../Utilities/contextProvider";
+import RenderAllMeasurements from "./RenderAllMeasurements";
+import RenderBatteryMeasurements from "./RenderBatteryMeasurements";
+import RenderBypassMeasurements from "./RenderBypassMeasurements";
+import RenderInputMeasurements from "./RenderInputMeasurments";
+import RenderOutputMeasurements from "./RenderOutputMeasurements";
 
 const MeasurementsArea = observer(() => {
-  const rootstore = useStore();
-
   const options = [
+    { value: "All", label: "All" },
     { value: "Battery", label: "Battery" },
     { value: "Input", label: "Input" },
     { value: "Output", label: "Output" },
@@ -14,90 +17,12 @@ const MeasurementsArea = observer(() => {
   ];
 
   const [filterValueMeasurements, setFilterValueMeasurements] = useState({
-    value: "Battery",
-    label: "Battery",
+    value: "All",
+    label: "All",
   });
 
   const handleChange = (optionValue) => {
     setFilterValueMeasurements(optionValue);
-  };
-
-  const renderBatteryMeasurements = () => {
-    try {
-      // rootstore.datasetStore.measurementsFromJSON(
-      //   JSON.parse(jsonData).measurements
-      // );
-
-      return rootstore.datasetStore.batteryMeasurements.forEach(
-        (measurement) => (
-          <li className="battery-measurement">
-            {measurement.name}:{measurement.value}
-            {measurement.unitOfMeasure}
-          </li>
-        )
-      );
-    } catch (error) {
-      rootstore.datasetStore.resetMeasurements();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderInputMeasurements = () => {
-    try {
-      // rootstore.datasetStore.measurementsFromJSON(
-      //   JSON.parse(jsonData).measurements
-      // );
-
-      return rootstore.datasetStore.inputMeasurements.forEach((measurement) => (
-        <li className="input-measurement">
-          {measurement.code}:{measurement.value}
-          {measurement.unitOfMeasure}
-        </li>
-      ));
-    } catch (error) {
-      rootstore.datasetStore.resetMeasurements();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderOutputMeasurements = () => {
-    try {
-      // rootstore.datasetStore.measurementsFromJSON(
-      //   JSON.parse(jsonData).measurements
-      // );
-
-      return rootstore.datasetStore.outputMeasurements.forEach(
-        (measurement) => (
-          <li className="output-measurement">
-            {measurement.code}:{measurement.value}
-            {measurement.unitOfMeasure}
-          </li>
-        )
-      );
-    } catch (error) {
-      rootstore.datasetStore.resetMeasurements();
-      return <p>Data not available!</p>;
-    }
-  };
-
-  const renderBypassMeasurements = () => {
-    try {
-      // rootstore.datasetStore.measurementsFromJSON(
-      //   JSON.parse(jsonData).measurements
-      // );
-
-      return rootstore.datasetStore.bypassMeasurements.forEach(
-        (measurement) => (
-          <li className="bypass-measurement">
-            {measurement.code}:{measurement.value}
-            {measurement.unitOfMeasure}
-          </li>
-        )
-      );
-    } catch (error) {
-      rootstore.datasetStore.resetMeasurements();
-      return <p>Data not available!</p>;
-    }
   };
 
   return (
@@ -108,7 +33,6 @@ const MeasurementsArea = observer(() => {
         <Select
           id="filterAlarms"
           options={options}
-          defaultValue={options[0]}
           value={filterValueMeasurements}
           onChange={handleChange}
         />
@@ -116,13 +40,20 @@ const MeasurementsArea = observer(() => {
 
       <div className="data-wrapper">
         <ul>
-          {filterValueMeasurements.value === "Battery" &&
-            renderBatteryMeasurements}
-          {filterValueMeasurements.value === "Input" && renderInputMeasurements}
-          {filterValueMeasurements.value === "Output" &&
-            renderOutputMeasurements}
-          {filterValueMeasurements.value === "Bypass" &&
-            renderBypassMeasurements}
+          {console.log(filterValueMeasurements)}
+          {filterValueMeasurements.value === "All" && (<RenderAllMeasurements />)}
+          {filterValueMeasurements.value === "Battery" && (
+            <RenderBatteryMeasurements />
+          )}
+          {filterValueMeasurements.value === "Input" && (
+            <RenderInputMeasurements />
+          )}
+          {filterValueMeasurements.value === "Output" && (
+            <RenderOutputMeasurements />
+          )}
+          {filterValueMeasurements.value === "Bypass" && (
+            <RenderBypassMeasurements />
+          )}
         </ul>
       </div>
     </div>
