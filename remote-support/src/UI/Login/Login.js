@@ -11,9 +11,11 @@ const Login = observer(() => {
 
   const [password, setPassword] = useState("");
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   async function loginFetch(username, password) {
     var credentials = { username, password };
-    return fetch("http://localhost:8080/login", {
+    return fetch("http://localhost:4000", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -22,15 +24,13 @@ const Login = observer(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await loginFetch(username, password);
-    if (response.token) {
+    const response = JSON.parse(await loginFetch(username, password));
+    if (response.token != null) {
       rootstore.stateUIStore.setLogged(true);
       rootstore.stateUIStore.setIdTech(response.user);
       rootstore.stateUIStore.setTokenAuth(response.token);
+      setErrorMessage(response.message);
     }
-    // if (token) {
-    //   rootstore.stateUIStore.setLogged(true);
-    // }
   };
 
   return (
@@ -69,6 +69,10 @@ const Login = observer(() => {
           </div>
 
           <input type="submit" name="submit" value="Sign in" />
+
+          <div id="error-message">
+            <p>{errorMessage}</p>
+          </div>
         </fieldset>
       </form>
     </div>

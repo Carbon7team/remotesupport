@@ -40,8 +40,7 @@ const MeasurementsArea = observer(() => {
 
       <div className="data-wrapper">
         <ul>
-          {console.log(filterValueMeasurements)}
-          {filterValueMeasurements.value === "All" && (<RenderAllMeasurements />)}
+          {filterValueMeasurements.value === "All" && <RenderAllMeasurements />}
           {filterValueMeasurements.value === "Battery" && (
             <RenderBatteryMeasurements />
           )}

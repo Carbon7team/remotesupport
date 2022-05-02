@@ -26,6 +26,12 @@ const Header = observer(() => {
     { value: "Not Available", label: "Not Available" },
   ];
 
+  const logout = () => {
+    rootstore.stateUIStore.setLogged(false);
+    rootstore.stateUIStore.setTokenAuth(undefined);
+    // chiamata http
+  };
+
   return (
     <div id="header-wrapper">
       <h1>Socomec Remote Support</h1>
@@ -40,7 +46,14 @@ const Header = observer(() => {
             onChange={handleChange}
             isDisabled={callAccepted && !callEnded}
           />
-          <button>Logout</button>
+          <button
+            onClick={() => {
+              logout();
+            }}
+            disabled={callAccepted && !callEnded}
+          >
+            Logout
+          </button>
         </div>
       )}
     </div>

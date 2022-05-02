@@ -24,7 +24,8 @@ const DataArea = observer((props) => {
 
   const { techVideo, userVideo, peerTech } = props.vars;
 
-  const { callAccepted, callEnded, availabilityTech } = rootstore.stateUIStore;
+  const { callAccepted, callEnded, availabilityTech, idTech } =
+    rootstore.stateUIStore;
 
   const sendCall = (idUserClient) => {
     const peer = new Peer("tecnico1" /* var con username del tecnico */, {
@@ -84,7 +85,7 @@ const DataArea = observer((props) => {
     const socket = socketIOClient(ENDPOINT);
 
     socket.send({
-      idTech: "tecnico1",
+      idTech: idTech,
     });
 
     socket.on("message", (data) => {
