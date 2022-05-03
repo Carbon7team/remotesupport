@@ -15,7 +15,8 @@ const Login = observer(() => {
 
   async function loginFetch(username, password) {
     var credentials = { username, password };
-    return fetch("http://localhost:4000", {
+    console.log(JSON.stringify(credentials))
+    return fetch("http://localhost:4000/loginUser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -24,12 +25,15 @@ const Login = observer(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = JSON.parse(await loginFetch(username, password));
+    const response = await loginFetch(username, password);
+    console.log(JSON.stringify(response));
     if (response.token != null) {
       rootstore.stateUIStore.setLogged(true);
+      rootstore.stateUIStore.setAvailabilityTech(true);
       rootstore.stateUIStore.setIdTech(response.user);
       rootstore.stateUIStore.setTokenAuth(response.token);
       setErrorMessage(response.message);
+      console.log(rootstore.stateUIStore.idTech);
     }
   };
 

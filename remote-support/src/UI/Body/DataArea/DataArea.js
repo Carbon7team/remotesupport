@@ -19,16 +19,19 @@ const DataArea = observer((props) => {
   const [idUserClient, setIdUserClient] = useState(null);
   const [nameClient, setNameClient] = useState(null);
   const [surnameClient, setSurnameClient] = useState(null);
-  const [companyClient, setCompanyClient] = useState(null);
+  const [emailClient, setEmailClient] = useState(null);
+  const [usernameClient, setUsernameClient] = useState(null);
   const [requestReceived, setRequestReceived] = useState(false);
 
   const { techVideo, userVideo, peerTech } = props.vars;
 
-  const { callAccepted, callEnded, availabilityTech, idTech } =
+  const { callAccepted, callEnded, availabilityTech } =
     rootstore.stateUIStore;
 
+    const socket = socketIOClient(ENDPOINT);
+
   const sendCall = (idUserClient) => {
-    const peer = new Peer("tecnico1" /* var con username del tecnico */, {
+    const peer = new Peer(rootstore.stateUIStore.idTech /* var con username del tecnico */, {
       host: "localhost",
       port: 9000,
       path: "/myapp",
@@ -74,37 +77,50 @@ const DataArea = observer((props) => {
   };
 
   const declineCall = () => {
+
+    const data_to_send = {
+      type: "refuse",
+      user_id: idUserClient,
+    }
+
+
+    socket.send(data_to_send);
     setRequestReceived(false);
     setIdUserClient(null);
+    setEmailClient(null);
+    setUsernameClient(null);
     setNameClient(null);
     setSurnameClient(null);
-    setCompanyClient(null);
   };
 
   const setDataRequestClient = () => {
-    const socket = socketIOClient(ENDPOINT);
+    
+    console.log("mi sono loggato");
+    const data_registration = {
+      type: "registration",
+      idUser: rootstore.stateUIStore.idTech,
+    }
 
-    socket.send({
-      idTech: idTech,
-    });
+    socket.send(data_registration);
 
     socket.on("message", (data) => {
-      if (data.identification === "virtualDisplay") {
-        if (data.type === "chiamata") {
-          setNameClient(data.name);
-          setSurnameClient(data.surname);
-          setCompanyClient(data.company);
-          setIdUserClient(data.idUserClient);
+      
+        if (data.type === "call") {
+          setNameClient(data.first_name);
+          setSurnameClient(data.last_name);
+          setEmailClient(data.email);
+          setUsernameClient(data.username);
+          setIdUserClient(data.user_id);
           setRequestReceived(true);
         }
-      }
+    
     });
   };
 
+
+
   useEffect(() => {
-    if (availabilityTech && requestReceived) {
-      setDataRequestClient();
-    }
+    setDataRequestClient();
     // eslint-disable-next-line
   }, []);
 
@@ -125,7 +141,8 @@ const DataArea = observer((props) => {
             <div id="request">
               <p>{nameClient}</p>
               <p>{surnameClient}</p>
-              <p>{companyClient}</p>
+              <p>{usernameClient}</p>
+              <p>{emailClient}</p>
               <Button
                 id="accept-button"
                 onClick={() => {

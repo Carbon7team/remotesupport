@@ -10,14 +10,40 @@ const Header = observer(() => {
   const { logged, callAccepted, callEnded, selectAvailability } =
     rootstore.stateUIStore;
 
-  const handleChange = (optionValue) => {
+
+    async function availabilityFetch(valueAvailability) {
+      
+      const data = {
+        disponibility: valueAvailability,
+        user_id: rootstore.stateUIStore.idTech
+      }
+      console.log("availability :"+ valueAvailability);
+      return fetch("http://localhost:4000/changeDisponibility", {
+        method: "POST",
+        headers: { 'Authentication': rootstore.stateUIStore.tokenAuth ,"Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }).then((data) => data)    //print data to console
+      .catch(err => console.log('Request Failed', err)); // Catch errors
+     
+    }
+
+  const handleChange = async (optionValue)  => {
     rootstore.stateUIStore.setSelectAvailability(optionValue);
 
     // chiamata http
+    
     if (rootstore.stateUIStore.selectAvailability.value === "Available") {
-      rootstore.stateUIStore.setAvailabilityTech(true);
+      const fetch = await availabilityFetch(true);
+        if(fetch.status== 200)
+          rootstore.stateUIStore.setAvailabilityTech(true);
+        else console.log(fetch.body);
+      
+    
     } else {
-      rootstore.stateUIStore.setAvailabilityTech(false);
+      const fetch = await availabilityFetch(false);
+      if(fetch.status== 200)
+        rootstore.stateUIStore.setAvailabilityTech(false);
+      else console.log(fetch.body);
     }
   };
 
@@ -26,10 +52,16 @@ const Header = observer(() => {
     { value: "Not Available", label: "Not Available" },
   ];
 
-  const logout = () => {
+  const logout = async () => {
+   
+    // chiamata http
+    await fetch("http://localhost:4000/logout", {
+      method: "DELETE",
+      headers: { 'authorization': rootstore.stateUIStore.tokenAuth },
+    }).then((data) => console.log(data.message));
+
     rootstore.stateUIStore.setLogged(false);
     rootstore.stateUIStore.setTokenAuth(undefined);
-    // chiamata http
   };
 
   return (
