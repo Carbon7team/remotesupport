@@ -15,6 +15,8 @@ test("setters", () => {
     value: "Available",
     label: "Available",
   });
+  expect(rootstore.stateUIStore.idTech).toBe(undefined);
+  expect(rootstore.stateUIStore.tokenAuth).toBe(undefined);
 
   // Setters' action
 
@@ -26,6 +28,8 @@ test("setters", () => {
     value: "Not Available",
     label: "Not Available",
   });
+  rootstore.stateUIStore.setIdTech("IdTech");
+  rootstore.stateUIStore.setTokenAuth("Token");
 
   // After setters' action
 
@@ -37,4 +41,6 @@ test("setters", () => {
     value: "Not Available",
     label: "Not Available",
   });
+  expect(rootstore.stateUIStore.idTech).toBe("IdTech");
+  expect(rootstore.stateUIStore.tokenAuth).toBe("Token");
 });

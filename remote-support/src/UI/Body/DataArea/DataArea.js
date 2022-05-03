@@ -5,7 +5,7 @@ import StatesArea from "./StatesArea/StatesArea";
 import MeasurementsArea from "./MeasurementsArea/MeasurementsArea";
 import { Button } from "@material-ui/core";
 import "./DataArea.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Peer from "peerjs";
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://localhost:4000";
@@ -13,8 +13,7 @@ const ENDPOINT = "http://localhost:4000";
 const DataArea = observer((props) => {
   const rootstore = useStore();
 
-  let call = useRef(null);
-  let connectionDataChannel = useRef(null);
+  const socket = socketIOClient(ENDPOINT);
 
   const [idUserClient, setIdUserClient] = useState(null);
   const [nameClient, setNameClient] = useState(null);
@@ -23,19 +22,22 @@ const DataArea = observer((props) => {
   const [usernameClient, setUsernameClient] = useState(null);
   const [requestReceived, setRequestReceived] = useState(false);
 
-  const { techVideo, userVideo, peerTech } = props.vars;
+  const { /*techVideo, userVideo,*/ peerTech } =
+    props.vars;
+  
+  let {call, connectionDataChannel} = props.vars;
 
-  const { callAccepted, callEnded, availabilityTech } =
-    rootstore.stateUIStore;
-
-    const socket = socketIOClient(ENDPOINT);
+  const { callAccepted, callEnded, availabilityTech } = rootstore.stateUIStore;
 
   const sendCall = (idUserClient) => {
-    const peer = new Peer(rootstore.stateUIStore.idTech /* var con username del tecnico */, {
-      host: "localhost",
-      port: 9000,
-      path: "/myapp",
-    });
+    const peer = new Peer(
+      rootstore.stateUIStore.idTech /* var con username del tecnico */,
+      {
+        host: "localhost",
+        port: 9000,
+        path: "/myapp",
+      }
+    );
 
     rootstore.stateUIStore.setCallAccepted(true);
     rootstore.stateUIStore.setCallEnded(false);
@@ -43,26 +45,26 @@ const DataArea = observer((props) => {
     peerTech.current = peer;
 
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+      .getUserMedia({ /*video: true,*/ audio: true })
       .then((mediaStream) => {
         rootstore.stateUIStore.setStreamTech(mediaStream);
 
-        techVideo.current.srcObject = mediaStream;
-        techVideo.current.play();
+        // techVideo.current.srcObject = mediaStream;
+        // techVideo.current.play();
 
         call = peerTech.current.call(idUserClient, mediaStream);
 
-        call.on("stream", (remoteStream) => {
-          userVideo.current.srcObject = remoteStream;
-          userVideo.current.play();
-        });
+        // call.on("stream", (remoteStream) => {
+        //   userVideo.current.srcObject = remoteStream;
+        //   userVideo.current.play();
+        // });
       });
 
-    connectionDataChannel = peer.connect(idUserClient);
+    connectionDataChannel = peer.connect(idUserClient); // provare anche peerTech.current.connect(idUserClient);
 
     connectionDataChannel.on("open", () => {
       connectionDataChannel.on("data", function (data) {
-        // setting arrays to stamp later
+        // setting arrays to stamp later, exception if json parse fails
         rootstore.datasetStore.alarmsFromJSON(
           JSON.parse(JSON.stringify(data)).states
         );
@@ -77,12 +79,10 @@ const DataArea = observer((props) => {
   };
 
   const declineCall = () => {
-
     const data_to_send = {
       type: "refuse",
       user_id: idUserClient,
-    }
-
+    };
 
     socket.send(data_to_send);
     setRequestReceived(false);
@@ -94,34 +94,29 @@ const DataArea = observer((props) => {
   };
 
   const setDataRequestClient = () => {
-    
     console.log("mi sono loggato");
     const data_registration = {
       type: "registration",
       idUser: rootstore.stateUIStore.idTech,
-    }
+    };
 
     socket.send(data_registration);
 
     socket.on("message", (data) => {
-      
-        if (data.type === "call") {
-          setNameClient(data.first_name);
-          setSurnameClient(data.last_name);
-          setEmailClient(data.email);
-          setUsernameClient(data.username);
-          setIdUserClient(data.user_id);
-          setRequestReceived(true);
-        }
-    
+      if (data.type === "call") {
+        setNameClient(data.first_name);
+        setSurnameClient(data.last_name);
+        setEmailClient(data.email);
+        setUsernameClient(data.username);
+        setIdUserClient(data.user_id);
+        setRequestReceived(true);
+      }
     });
   };
 
-
-
   useEffect(() => {
+    //if(!requestReceived)
     setDataRequestClient();
-    // eslint-disable-next-line
   }, []);
 
   return (
@@ -137,7 +132,7 @@ const DataArea = observer((props) => {
       {!callAccepted && callEnded && availabilityTech && (
         <div id="waiting">
           <h3>Available for requests!</h3>
-          <p>Waiting for new request down here:</p> 
+          <p>Waiting for new request down here:</p>
           {requestReceived && (
             <div id="request">
               <p>{nameClient}</p>

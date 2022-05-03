@@ -3,10 +3,10 @@ import { action, makeObservable, observable } from "mobx";
 class StateUIStore {
   constructor(rootstore) {
     this.rootstore = rootstore;
-    this.logged = true;
-    this.callAccepted = true;
-    this.callEnded = false;
-    this.availabilityTech = true;
+    this.logged = false;
+    this.callAccepted = false;
+    this.callEnded = true;
+    this.availabilityTech = false;
     this.selectAvailability = { value: "Available", label: "Available" };
     this.streamTech = undefined;
     this.idTech = undefined;

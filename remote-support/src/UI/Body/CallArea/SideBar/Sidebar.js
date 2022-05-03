@@ -4,8 +4,8 @@ import {
   PhoneDisabled,
   VolumeUp,
   VolumeOff,
-  Videocam,
-  VideocamOff,
+  // Videocam,
+  // VideocamOff,
 } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../Utilities/contextProvider";
@@ -18,7 +18,7 @@ const Sidebar = observer((props) => {
   const { streamTech } = rootstore.stateUIStore;
 
   const [audio, setAudio] = useState(true);
-  const [video, setVideo] = useState(true);
+  // const [video, setVideo] = useState(true);
 
   const toggleAudio = () => {
     streamTech
@@ -26,11 +26,11 @@ const Sidebar = observer((props) => {
       .forEach((track) => (track.enabled = !track.enabled));
   };
 
-  const toggleVideo = () => {
-    streamTech
-      .getVideoTracks()
-      .forEach((track) => (track.enabled = !track.enabled));
-  };
+  // const toggleVideo = () => {
+  //   streamTech
+  //     .getVideoTracks()
+  //     .forEach((track) => (track.enabled = !track.enabled));
+  // };
 
   const leaveCall = () => {
     rootstore.stateUIStore.setCallEnded(true);
@@ -39,9 +39,11 @@ const Sidebar = observer((props) => {
     rootstore.datasetStore.resetStates();
     rootstore.datasetStore.resetAlarms();
     rootstore.datasetStore.resetMeasurements();
-    call.close();
-    connectionDataChannel.close();
-    peerTech.destroy();
+
+    // come qui https://github.com/adrianhajdin/project_video_chat/blob/master/client/src/Context.js line 78
+    call.current.close();
+    connectionDataChannel.current.close();
+    peerTech.current.destroy();
   };
 
   return (
@@ -67,7 +69,7 @@ const Sidebar = observer((props) => {
           }}
         />
       )}
-      {video ? (
+      {/* {video ? (
         <Button
           className="video-button"
           variant="contained"
@@ -87,7 +89,7 @@ const Sidebar = observer((props) => {
             toggleVideo();
           }}
         />
-      )}
+      )} */}
 
       <Button
         variant="contained"

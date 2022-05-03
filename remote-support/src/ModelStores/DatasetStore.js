@@ -7,22 +7,22 @@ class DatasetStore {
   constructor(rootstore) {
     this.rootstore = rootstore;
     this.states = [
-      new State("S000", "stato attivo", true),
-      new State("S001", "stato non attivo", false),
+      // new State("S000", "stato attivo", true),
+      // new State("S001", "stato non attivo", false),
     ];
     this.alarms = [
-      new Alarm("A000", "allarme critico", "Critical"),
-      new Alarm("A001", "allarme warning", "Warning"),
-      new Alarm("A002", "allarme nothing", "Nothing"),
+      // new Alarm("A000", "allarme critico", "Critical"),
+      // new Alarm("A001", "allarme warning", "Warning"),
+      // new Alarm("A002", "allarme nothing", "Nothing"),
     ];
     this.measurements = [
-      new Measurement("M015", "percentuale batteria", 15, "%"),
-      new Measurement("M014", "L1 output energia", 20, "V"),
-      new Measurement("M048", "L2 output energia", 10, "V"),
-      new Measurement("M045", "L1 bypass", 30, "MW"),
-      new Measurement("M070", "L2 bypass", 100, "MW"),
-      new Measurement("M038", "L1 input energia", 70, "V"),
-      new Measurement("M064", "L2 input energia", 65, "V"),
+      // new Measurement("M015", "percentuale batteria", 15, "%"),
+      // new Measurement("M014", "L1 output energia", 20, "V"),
+      // new Measurement("M048", "L2 output energia", 10, "V"),
+      // new Measurement("M045", "L1 bypass", 30, "MW"),
+      // new Measurement("M070", "L2 bypass", 100, "MW"),
+      // new Measurement("M038", "L1 input energia", 70, "V"),
+      // new Measurement("M064", "L2 input energia", 65, "V"),
     ];
     makeObservable(this, {
       states: observable,
