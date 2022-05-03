@@ -1,0 +1,7 @@
+#view-wrapper{
+  margin: auto;
+  max-width: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

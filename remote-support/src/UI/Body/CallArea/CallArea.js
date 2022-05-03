@@ -15,7 +15,7 @@ const CallArea = observer((props) => {
 
   return (
     <div id="wrapper-callarea">
-      <h2>Video Chat</h2>
+      <h2>Call Area</h2>
 
       <video id="tech-video" playsInline ref={techVideo} autoPlay />
       {callAccepted && !callEnded && <Sidebar vars={varsSidebar} />}

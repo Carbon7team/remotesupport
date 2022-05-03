@@ -69,15 +69,17 @@ const Header = observer(() => {
       <h1>Socomec Remote Support</h1>
       {logged && (
         <div id="wrapper-settings">
-          <p>Availability</p>
-          <Select
-            id="availabilityBtn"
-            options={options}
-            value={selectAvailability}
-            defaultValue={options[0]}
-            onChange={handleChange}
-            isDisabled={callAccepted && !callEnded}
-          />
+          <div id="availability-wrapper">
+            <p>Availability</p>
+            <Select
+              id="availabilityBtn"
+              options={options}
+              value={selectAvailability}
+              defaultValue={options[0]}
+              onChange={handleChange}
+              isDisabled={callAccepted && !callEnded}
+            />
+          </div>
           <button
             onClick={() => {
               logout();

@@ -136,7 +136,8 @@ const DataArea = observer((props) => {
 
       {!callAccepted && callEnded && availabilityTech && (
         <div id="waiting">
-          Waiting for new request down here:
+          <h3>Available for requests!</h3>
+          <p>Waiting for new request down here:</p> 
           {requestReceived && (
             <div id="request">
               <p>{nameClient}</p>

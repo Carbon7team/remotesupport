@@ -3,6 +3,7 @@ import { useStore } from "../Utilities/contextProvider";
 import Header from "./Header/Header";
 import Login from "./Login/Login";
 import Body from "./Body/Body";
+import "./View.css";
 
 const View = observer(() => {
   const rootstore = useStore();

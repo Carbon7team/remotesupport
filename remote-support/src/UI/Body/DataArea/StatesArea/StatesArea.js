@@ -22,10 +22,11 @@ const StatesArea = observer(() => {
   };
 
   return (
-    <div className="container-wrapper">
-      <div className="title-wrapper">
-        <h2>States</h2>
-        <p>Filters:</p>
+    <div className="s-container-wrapper">
+      <h2>States</h2>
+      <hr />
+      <div className="filter-wrapper">
+        <p>Apply Filters:</p>
         <Select
           id="filterStates"
           options={options}
@@ -33,7 +34,7 @@ const StatesArea = observer(() => {
           onChange={handleChange}
         />
       </div>
-
+      <hr />
       <div className="data-wrapper">
         <ul>
           {filterValueStates.value === "All" && <RenderAllStates />}

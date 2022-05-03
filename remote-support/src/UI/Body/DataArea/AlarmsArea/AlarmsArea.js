@@ -22,10 +22,11 @@ const AlarmsArea = observer(() => {
   };
 
   return (
-    <div className="container-wrapper">
-      <div className="title-wrapper">
-        <h2>Alarms</h2>
-        <p>Filters:</p>
+    <div className="a-container-wrapper">
+      <h2>Alarms</h2>
+      <hr />
+      <div className="filter-wrapper">
+        <p>Apply Filters:</p>
         <Select
           id="filterAlarms"
           options={options}
@@ -34,6 +35,7 @@ const AlarmsArea = observer(() => {
           onChange={handleChange}
         />
       </div>
+      <hr />
       <div className="data-wrapper">
         <ul>
           {filterValueAlarms.value === "All" && <RenderAllAlarms />}
