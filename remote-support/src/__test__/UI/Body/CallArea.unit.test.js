@@ -14,7 +14,7 @@ describe("CallArea correct render", () => {
   });
 
   test("CallArea render not in call", () => {
-    useStore.mockReturnValueOnce({
+    useStore.mockReturnValue({
       stateUIStore: {
         callAccepted: false,
         callEnded: true,
@@ -26,13 +26,15 @@ describe("CallArea correct render", () => {
   });
 
   test("CallArea render in call", () => {
-    useStore.mockReturnValueOnce({
+    useStore.mockReturnValue({
       stateUIStore: {
+        callAccepted: true,
+        callEnded: false,
         streamTech: null,
       },
     });
 
-    let tree = create(<CallArea vars={vars} />).toJSON();
-    expect(tree).toMatchSnapshot();
+    render(<CallArea vars={vars} />);
+    expect(document.getElementById("wrapper-sidebar")).toBeInTheDocument();
   });
 });
