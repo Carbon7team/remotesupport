@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import Select from "react-select";
-import RenderAllAlarms from "./RenderAllAlarms";
-import RenderCriticalAlarms from "./RenderCriticalAlarms";
-import RenderWarningAlarms from "./RenderWarningAlarms";
+import ListAllAlarms from "./ListAllAlarms";
+import ListCriticalAlarms from "./ListCriticalAlarms";
+import ListWarningAlarms from "./ListWarningAlarms";
 
 const AlarmsArea = observer(() => {
   const options = [
@@ -38,9 +38,9 @@ const AlarmsArea = observer(() => {
       <hr />
       <div className="data-wrapper">
         <ul>
-          {filterValueAlarms.value === "All" && <RenderAllAlarms />}
-          {filterValueAlarms.value === "Criticals" && <RenderCriticalAlarms />}
-          {filterValueAlarms.value === "Warnings" && <RenderWarningAlarms />}
+          {filterValueAlarms.value === "All" && <ListAllAlarms />}
+          {filterValueAlarms.value === "Criticals" && <ListCriticalAlarms />}
+          {filterValueAlarms.value === "Warnings" && <ListWarningAlarms />}
         </ul>
       </div>
     </div>

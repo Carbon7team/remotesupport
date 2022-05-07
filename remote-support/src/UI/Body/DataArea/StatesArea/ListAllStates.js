@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../Utilities/contextProvider";
 
-const RenderAllStates = observer(() => {
+const ListAllStates = observer(() => {
   const rootstore = useStore();
 
   return rootstore.datasetStore.states.map((state) => (
@@ -14,4 +14,4 @@ const RenderAllStates = observer(() => {
   ));
 });
 
-export default RenderAllStates;
+export default ListAllStates;

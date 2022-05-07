@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../Utilities/contextProvider";
 
-const RenderWarningAlarms = observer(() => {
+const ListWarningAlarms = observer(() => {
   const rootstore = useStore();
 
   return rootstore.datasetStore.warningAlarms.map((alarm) => (
@@ -11,4 +11,4 @@ const RenderWarningAlarms = observer(() => {
   ));
 });
 
-export default RenderWarningAlarms;
+export default ListWarningAlarms;

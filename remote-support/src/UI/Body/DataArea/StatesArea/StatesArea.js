@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import Select from "react-select";
-import RenderAllStates from "./RenderAllStates";
-import RenderActiveStates from "./RenderActiveStates";
-import RenderNotActiveStates from "./RenderNotActiveStates";
+import ListAllStates from "./ListAllStates";
+import ListActiveStates from "./ListActiveStates";
+import ListNotActiveStates from "./ListNotActiveStates";
 
 const StatesArea = observer(() => {
   const options = [
@@ -37,11 +37,9 @@ const StatesArea = observer(() => {
       <hr />
       <div className="data-wrapper">
         <ul>
-          {filterValueStates.value === "All" && <RenderAllStates />}
-          {filterValueStates.value === "Active" && <RenderActiveStates />}
-          {filterValueStates.value === "Not Active" && (
-            <RenderNotActiveStates />
-          )}
+          {filterValueStates.value === "All" && <ListAllStates />}
+          {filterValueStates.value === "Active" && <ListActiveStates />}
+          {filterValueStates.value === "Not Active" && <ListNotActiveStates />}
         </ul>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import Select from "react-select";
-import RenderAllMeasurements from "./RenderAllMeasurements";
-import RenderBatteryMeasurements from "./RenderBatteryMeasurements";
-import RenderBypassMeasurements from "./RenderBypassMeasurements";
-import RenderInputMeasurements from "./RenderInputMeasurments";
-import RenderOutputMeasurements from "./RenderOutputMeasurements";
+import ListAllMeasurements from "./ListAllMeasurements";
+import ListBatteryMeasurements from "./ListBatteryMeasurements";
+import ListBypassMeasurements from "./ListBypassMeasurements";
+import ListInputMeasurements from "./ListInputMeasurments";
+import ListOutputMeasurements from "./ListOutputMeasurements";
 
 const MeasurementsArea = observer(() => {
   const options = [
@@ -41,18 +41,18 @@ const MeasurementsArea = observer(() => {
       <hr />
       <div className="data-wrapper">
         <ul>
-          {filterValueMeasurements.value === "All" && <RenderAllMeasurements />}
+          {filterValueMeasurements.value === "All" && <ListAllMeasurements />}
           {filterValueMeasurements.value === "Battery" && (
-            <RenderBatteryMeasurements />
+            <ListBatteryMeasurements />
           )}
           {filterValueMeasurements.value === "Input" && (
-            <RenderInputMeasurements />
+            <ListInputMeasurements />
           )}
           {filterValueMeasurements.value === "Output" && (
-            <RenderOutputMeasurements />
+            <ListOutputMeasurements />
           )}
           {filterValueMeasurements.value === "Bypass" && (
-            <RenderBypassMeasurements />
+            <ListBypassMeasurements />
           )}
         </ul>
       </div>

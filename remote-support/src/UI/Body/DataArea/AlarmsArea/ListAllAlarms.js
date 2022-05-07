@@ -1,7 +1,7 @@
 import { useStore } from "../../../../Utilities/contextProvider";
 import { observer } from "mobx-react-lite";
 
-const RenderAllAlarms = observer(() => {
+const ListAllAlarms = observer(() => {
   const rootstore = useStore();
 
   return rootstore.datasetStore.alarms.map((alarm) => (
@@ -20,4 +20,4 @@ const RenderAllAlarms = observer(() => {
   ));
 });
 
-export default RenderAllAlarms;
+export default ListAllAlarms;

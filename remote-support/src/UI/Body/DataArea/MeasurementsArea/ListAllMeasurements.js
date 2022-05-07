@@ -1,12 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../Utilities/contextProvider";
 
-const RenderAllMeasurements = observer(() => {
+const ListAllMeasurements = observer(() => {
   const rootstore = useStore();
 
   const setClassName = (code) => {
-    if (code >= "M015" && code <= "M031")
-      return "battery-measurement";
+    if (code >= "M015" && code <= "M031") return "battery-measurement";
     else if (
       (code >= "M032" && code <= "M038") ||
       (code >= "M064" && code <= "M069")
@@ -31,4 +30,4 @@ const RenderAllMeasurements = observer(() => {
   ));
 });
 
-export default RenderAllMeasurements;
+export default ListAllMeasurements;

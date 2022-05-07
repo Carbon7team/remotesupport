@@ -1,14 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../Utilities/contextProvider";
 
-const RenderInputMeasurements = observer(() => {
+const ListBatteryMeasurements = observer(() => {
   const rootstore = useStore();
 
-  return rootstore.datasetStore.inputMeasurements.map((measurement) => (
-    <li key={measurement.code} className="input-measurement">
+  return rootstore.datasetStore.batteryMeasurements.map((measurement) => (
+    <li key={measurement.code} className={"battery-measurement"}>
       {measurement.name}: {measurement.value} {measurement.unitOfMeasure}
     </li>
   ));
 });
 
-export default RenderInputMeasurements;
+export default ListBatteryMeasurements;

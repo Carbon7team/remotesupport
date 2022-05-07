@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../Utilities/contextProvider";
 
-const RenderBypassMeasurements = observer(() => {
+const ListBypassMeasurements = observer(() => {
   const rootstore = useStore();
 
   return rootstore.datasetStore.bypassMeasurements.map((measurement) => (
@@ -11,4 +11,4 @@ const RenderBypassMeasurements = observer(() => {
   ));
 });
 
-export default RenderBypassMeasurements;
+export default ListBypassMeasurements;

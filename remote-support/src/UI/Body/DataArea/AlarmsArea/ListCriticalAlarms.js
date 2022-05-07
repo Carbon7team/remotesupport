@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../Utilities/contextProvider";
 
-const RenderCriticalAlarms = observer(() => {
+const ListCriticalAlarms = observer(() => {
   const rootstore = useStore();
 
   return rootstore.datasetStore.criticalAlarms.map((alarm) => (
@@ -11,4 +11,4 @@ const RenderCriticalAlarms = observer(() => {
   ));
 });
 
-export default RenderCriticalAlarms;
+export default ListCriticalAlarms;
