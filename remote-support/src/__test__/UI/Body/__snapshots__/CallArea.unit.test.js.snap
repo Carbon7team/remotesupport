@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CallArea correct render CallArea render in call 1`] = `
+<div
+  id="wrapper-callarea"
+>
+  <h2>
+    Call Area
+  </h2>
+</div>
+`;
+
+exports[`CallArea correct render CallArea render not in call 1`] = `
+<div
+  id="wrapper-callarea"
+>
+  <h2>
+    Call Area
+  </h2>
+</div>
+`;
