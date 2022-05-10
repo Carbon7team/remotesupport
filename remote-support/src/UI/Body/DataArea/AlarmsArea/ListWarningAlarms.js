@@ -5,7 +5,7 @@ const ListWarningAlarms = observer(() => {
   const rootstore = useStore();
 
   return rootstore.datasetStore.warningAlarms.map((alarm) => (
-    <li key={alarm.code} className={"critical-item"}>
+    <li key={alarm.code} className={"warning-item"}>
       {alarm.code}: {alarm.name}
     </li>
   ));
