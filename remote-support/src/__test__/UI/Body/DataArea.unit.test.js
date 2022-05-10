@@ -14,7 +14,7 @@ describe("DataArea correct render", () => {
   });
 
     test("DataArea render not in call", () => {
-        useStore.mockReturnValue({
+        useStore.mockReturnValueOnce({
             stateUIStore: {
                 callAccepted: false,
                 callEnded: true,
@@ -25,7 +25,7 @@ describe("DataArea correct render", () => {
     });
 
     test("DataArea render in call", () => {
-        useStore.mockReturnValue({
+        useStore.mockReturnValueOnce({
             stateUIStore: {
                 callAccepted: true,
                 callEnded: false,
