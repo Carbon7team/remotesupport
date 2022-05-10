@@ -17,8 +17,8 @@ import Header from "../../../UI/Header/Header";
 // create useStore mock
 jest.mock("../../../Utilities/contextProvider");
 
-describe("Header custom render", () => {
-  test("Header when logged", () => {
+describe("Header custom render with mock", () => {
+  test("Header when not logged", () => {
     // setting mock's values
     useStore.mockReturnValueOnce({
       stateUIStore: {
@@ -32,7 +32,7 @@ describe("Header custom render", () => {
     expect(document.getElementById("wrapper-settings")).not.toBeInTheDocument();
   });
 
-  test("Header when not logged", () => {
+  test("Header when logged", () => {
     // setting mock's value
     useStore.mockReturnValueOnce({
       stateUIStore: {
