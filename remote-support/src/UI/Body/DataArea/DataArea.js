@@ -63,16 +63,21 @@ const DataArea = observer((props) => {
     connectionDataChannel = peer.connect(idUserClient); // provare anche peerTech.current.connect(idUserClient);
 
     connectionDataChannel.on("open", () => {
+    
+
+
       connectionDataChannel.on("data", function (data) {
+        console.log(data);
+
         // setting arrays to stamp later, exception if json parse fails
-        rootstore.datasetStore.alarmsFromJSON(
-          JSON.parse(JSON.stringify(data)).states
+        rootstore.datasetStore.statesFromJSON(
+          JSON.parse(data).status
         );
         rootstore.datasetStore.alarmsFromJSON(
-          JSON.parse(JSON.stringify(data)).alarms
+          JSON.parse(data).alarms
         );
-        rootstore.datasetStore.alarmsFromJSON(
-          JSON.parse(JSON.stringify(data)).measurements
+        rootstore.datasetStore.measurementsFromJSON(
+          JSON.parse(data).measurements
         );
       });
     });
@@ -83,7 +88,11 @@ const DataArea = observer((props) => {
       type: "refuse",
       user_id: idUserClient,
     };
-
+    /*
+    const fetchAvaiability = await availabilityFetch(true);
+    if(fetchAvaiability.status== 200)
+      rootstore.stateUIStore.setAvailabilityTech(true);
+*/
     socket.send(data_to_send);
     setRequestReceived(false);
     setIdUserClient(null);
@@ -94,7 +103,6 @@ const DataArea = observer((props) => {
   };
 
   const setDataRequestClient = () => {
-    console.log("mi sono loggato");
     const data_registration = {
       type: "registration",
       idUser: rootstore.stateUIStore.idTech,
@@ -110,8 +118,32 @@ const DataArea = observer((props) => {
         setUsernameClient(data.username);
         setIdUserClient(data.user_id);
         setRequestReceived(true);
+/*
+        const fetchAvaiability = await availabilityFetch(false);
+        if(fetchAvaiability.status== 200)
+          rootstore.stateUIStore.setAvailabilityTech(false);
+           */
       }
+     
     });
+
+/*
+    async function availabilityFetch(valueAvailability) {
+      
+      const data = {
+        disponibility: valueAvailability,
+        user_id: rootstore.stateUIStore.idTech
+      }
+      console.log("availability :"+ valueAvailability);
+      return fetch("http://localhost:4000/changeDisponibility", {
+        method: "POST",
+        headers: { 'Authentication': rootstore.stateUIStore.tokenAuth ,"Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }).then((data) => data)    //print data to console
+      .catch(err => console.log('Request Failed', err)); // Catch errors
+     
+    }
+    */
   };
 
   useEffect(() => {
