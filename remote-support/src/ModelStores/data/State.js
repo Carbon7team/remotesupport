@@ -1,25 +1,24 @@
 import { makeAutoObservable } from "mobx";
 
-
 class State {
-    constructor(code = "", name = "", active = false){
-        this._code = code;
-        this._name = name;
-        this._active = active;
-        makeAutoObservable(this);
-    }
+  constructor(code = "", name = "", active = false) {
+    this.Code = code;
+    this.Name = name;
+    this.Active = active;
+    makeAutoObservable(this);
+  }
 
-    get code(){
-        return this._code;
-    }
+  get code() {
+    return this.Code;
+  }
 
-    get name(){
-        return this._name;
-    }
+  get name() {
+    return this.Name;
+  }
 
-    get active(){
-        return this._active;
-    }
+  get active() {
+    return this.Active;
+  }
 }
 
 export default State;

@@ -1,42 +1,30 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useRef } from "react";
-import { useStore } from "../../Utilities/contextProvider";
-import { useInstance } from "../../Utilities/useInstance";
-import BodyVM from "./BodyVM";
+import { useRef } from "react";
 import CallArea from "./CallArea/CallArea";
 import DataArea from "./DataArea/DataArea";
-import './Body.css';
+import "./Body.css";
 
 const Body = observer(() => {
+  // const techVideo = useRef(null);
+  // const userVideo = useRef(null);
+  const peerTech = useRef(null);
+  let call = useRef(null);
+  let connectionDataChannel = useRef(null);
 
-    const techVideo = useRef(null);
-    const userVideo = useRef(null);
-    const call = useRef(null);
-    const connectionDataChannel = useRef(null);
-    const peerTech = useRef(null);
+  const vars = {
+    // techVideo,
+    // userVideo,
+    peerTech,
+    call,
+    connectionDataChannel,
+  };
 
-
-    const {
-        sendCall,
-        setDataRequestClient,
-        availabilityTech,
-        requestReceived
-    } = useInstance(new BodyVM(useStore()));
-
-    
-    useEffect(() => {
-        if(availabilityTech && requestReceived) {
-            setDataRequestClient();
-        }
-        // eslint-disable-next-line
-    }, []);
-
-    return(
-        <div id="wrapper-body">
-            <DataArea sendcall={sendCall}/>
-            <CallArea techVideo={techVideo} userVideo={userVideo} call={call} connectionDataChannel={connectionDataChannel} peerTech={peerTech}/>
-        </div>
-    )
-})
+  return (
+    <div id="wrapper-body">
+      <DataArea vars={vars} />
+      <CallArea vars={vars} />
+    </div>
+  );
+});
 
 export default Body;

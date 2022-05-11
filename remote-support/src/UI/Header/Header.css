@@ -1,4 +1,4 @@
-header{
+#header-wrapper{
     display: flex;
     flex-direction: row;
     background-color: #49b7aa;
@@ -9,8 +9,28 @@ header{
 
 #wrapper-settings {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
+}
+
+#wrapper-settings button{
+    padding: 1em;
+    margin: .5em;
+    border-radius: 10px;
+    border-style: none;
+}
+
+#availability-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: #19474149;
+    border-radius: 10px;
+    padding: .7em .5em .4em .5em ;
+    
+}
+
+#availability-wrapper p{
+    margin: 1em;
 }

@@ -1,117 +1,67 @@
 import { action, makeObservable, observable } from "mobx";
 
 class StateUIStore {
-    constructor(rootstore){
-        this.rootstore = rootstore;
-        this.logged = true;
-        this.callAccepted = false;
-        this.callEnded = true;
-        this.stream = undefined;
-        this.jsonData = null;
-        this.idUserClient = null;
-        this.nameClient = null;
-        this.surnameClient = null;
-        this.companyClient = null;
-        this.requestReceived = false;
-        this.peerTech = undefined;
-        this.availabilityTech = false;
-        this.filterValueAlarms = undefined;
-        this.filterValueStates = undefined;
-        this.filterValueMeasurements = undefined;
-        makeObservable(this, {
-            logged: observable,
-            callAccepted: observable,
-            callEnded: observable,
-            stream: observable,
-            jsonData: observable,
-            idUserClient: observable,
-            nameClient: observable,
-            surnameClient: observable,
-            companyClient: observable,
-            requestReceived: observable,
-            peerTech: observable,
-            availabilityTech: observable,
-            filterValueAlarms: observable,
-            filterValueStates: observable,
-            filterValueMeasurements: observable,
-            setLogged: action,
-            setCallAccepted: action,
-            setCallEnded: action,
-            setStream: action,
-            setJsonData: action,
-            setIdUserClient: action,
-            setNameClient: action,
-            setSurnameClient: action,
-            setCompanyClient: action,
-            setRequestReceived: action,
-            setPeerTech: action,
-            setAvailabilityTech: action,
-            setFilterValueAlarms: action,
-            setFilterValueStates: action,
-            setFilterValueMeasurements: action
-        });
-    }
+  constructor(rootstore) {
+    this.rootstore = rootstore;
+    this.logged = false;
+    this.callAccepted = false;
+    this.callEnded = true;
+    this.availabilityTech = false;
+    this.selectAvailability = { value: "Available", label: "Available" };
+    this.streamTech = undefined;
+    this.idTech = undefined;
+    this.tokenAuth = undefined;
+    makeObservable(this, {
+      logged: observable,
+      callAccepted: observable,
+      callEnded: observable,
+      availabilityTech: observable,
+      selectAvailability: observable,
+      streamTech: observable,
+      idTech: observable,
+      tokenAuth: observable,
+      setLogged: action,
+      setCallAccepted: action,
+      setCallEnded: action,
+      setAvailabilityTech: action,
+      setSelectAvailability: action,
+      setStreamTech: action,
+      setIdTech: action,
+      setTokenAuth: action,
+    });
+  }
 
-    setLogged(boolValue){
-        this.logged = boolValue;
-    }
+  setLogged(boolValue) {
+    this.logged = boolValue;
+  }
 
-    setCallAccepted(boolValue){
-        this.callAccepted = boolValue;
-    }
+  setCallAccepted(boolValue) {
+    this.callAccepted = boolValue;
+  }
 
-    setCallEnded(boolValue){
-        this.callEnded = boolValue;
-    }
+  setCallEnded(boolValue) {
+    this.callEnded = boolValue;
+  }
 
-    setStream(mediaStreamValue){
-        this.stream = mediaStreamValue;
-    }
+  setAvailabilityTech(boolValue) {
+    this.availabilityTech = boolValue;
+  }
 
-    setJsonData(stringValue){
-        this.jsonData = stringValue;
-    }
+  setSelectAvailability(stringValues) {
+    this.selectAvailability = stringValues;
+  }
 
-    setIdUserClient(stringValue){
-        this.idUserClient = stringValue;
-    }
+  setStreamTech(MediaStreamValue) {
+    this.streamTech = MediaStreamValue;
+  }
 
-    setNameClient(stringValue){
-        this.nameClient = stringValue;
-    }
+  setIdTech(stringValue) {
+    this.idTech = stringValue;
+  }
 
-    setSurnameClient(stringValue){
-        this.surnameClient = stringValue;
-    }
-    
-    setCompanyClient(stringValue){
-        this.companyClient = stringValue;
-    }
-
-    setRequestReceived(boolValue){
-        this.requestReceived = boolValue;
-    }
-
-    setPeerTech(peerValue){
-        this.peerTech = peerValue;
-    }
-
-    setAvailabilityTech(boolValue){
-        this.availabilityTech = boolValue;
-    }
-
-    setFilterValueAlarms(stringValue){
-        this.filterValueAlarms = stringValue;
-    }
-
-    setFilterValueStates(stringValue){
-        this.filterValueStates = stringValue;
-    }
-
-    setFilterValueMeasurements(stringValue){
-        this.filterValueMeasurements = stringValue;
-    }
-
+  setTokenAuth(stringValue) {
+    this.tokenAuth = stringValue;
+  }
 }
 
 export default StateUIStore;

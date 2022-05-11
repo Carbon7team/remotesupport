@@ -1,29 +1,29 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from "mobx";
 
-class Measurement{
-    constructor(code = "", name = "", value = NaN, type = ""){
-        this._code = code;
-        this._name = name;
-        this._value = value;
-        this._type = type;
-        makeAutoObservable(this);
-    }
+class Measurement {
+  constructor(code = "", name = "", value = NaN, unitOfMeasure = "") {
+    this.Code = code;
+    this.Name = name;
+    this.Value = value;
+    this.UnitOfMeasure = unitOfMeasure;
+    makeAutoObservable(this);
+  }
 
-    get code(){
-        return this._code;
-    }
+  get code() {
+    return this.Code;
+  }
 
-    get name(){
-        return this._name;
-    }
+  get name() {
+    return this.Name;
+  }
 
-    get value(){
-        return NaN ? null : this._value;
-    }
+  get value() {
+    return NaN ? null : this.Value;
+  }
 
-    get type(){
-        return this._type;
-    }
+  get unitOfMeasure() {
+    return this.UnitOfMeasure;
+  }
 }
 
 export default Measurement;

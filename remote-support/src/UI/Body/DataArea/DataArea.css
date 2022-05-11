@@ -1,18 +1,77 @@
-.dataArea-wrapper{
-    position: relative;
-    top: auto;
-    bottom: 9em;
-    left: auto;
-    padding: 1em;
-
+#not-available, #waiting {
+    display: grid;
+    
 }
 
-#not-available h3 {
+#not-available h3, #waiting h3 {
     font-size: 2em;
 }
 
-#not-available p {
+#not-available p, #waiting p {
     font-size: 0.9em;
     position: relative;
     bottom: 2em;
 }
+
+
+
+.dataArea-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#data-display {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+                        "a m m "
+                        "s m m ";
+}
+
+
+
+.a-container-wrapper {
+    min-width: max-content;
+    grid-area: a;
+    background-color: azure;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    align-items: center;
+    padding: 1em;
+    margin: 1em;
+}
+
+.s-container-wrapper {
+    min-width: max-content;
+    grid-area: s;
+    background-color: azure;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    align-items: center;
+    padding: 1em;
+    margin: 1em;
+}
+
+.m-container-wrapper {
+    min-width: max-content;
+    grid-area: m;
+    background-color: azure;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    align-items: center;
+    padding: 1em;
+    margin: 1em;
+}
+
+.filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.data-wrapper {
+    background-color: white;
+    padding: 1em;
+    border-radius: 10px;
+}
+

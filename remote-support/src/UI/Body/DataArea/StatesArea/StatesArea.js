@@ -1,40 +1,49 @@
-import React from 'react';
+import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
-import StatesAreaVM from './StatesAreaVM';
-import { useStore } from '../../../../Utilities/contextProvider';
-import { useInstance } from '../../../../Utilities/useInstance';
-import Select from 'react-select';
-
+import Select from "react-select";
+import ListAllStates from "./ListAllStates";
+import ListActiveStates from "./ListActiveStates";
+import ListNotActiveStates from "./ListNotActiveStates";
 
 const StatesArea = observer(() => {
-    
-    const {
-        renderAllStates,
-        renderActiveStates,
-        renderNotActiveStates,
-        options,
-        handleChange,
-        filterValueStates,
-        jsonData
-    } = useInstance(new StatesAreaVM(useStore()));
+  const options = [
+    { value: "All", label: "All" },
+    { value: "Active", label: "Active" },
+    { value: "Not Active", label: "Not Active" },
+  ];
 
-    return(
-        <div className='container-wrapper'>
-            <div className='title-wrapper'>
-                <h2>States</h2>
-                <p>Filters:</p>
-                <Select id='filterStates' options={options} defaultValue={options[0]} value={filterValueStates} onChange={handleChange}/>
-            </div>
+  const [filterValueStates, setFilterValueStates] = useState({
+    value: "All",
+    label: "All",
+  });
 
-            <div className='data-wrapper'>
-                <ul>
-                    {filterValueStates === "All" ? renderAllStates(jsonData) : <></>}
-                    {filterValueStates === "Active" ? renderActiveStates(jsonData) : <></>}
-                    {filterValueStates === "Not Active" ? renderNotActiveStates(jsonData) : <></>}
-                </ul>
-            </div>
-        </div>
-    )
+  const handleChange = (optionValue) => {
+    setFilterValueStates(optionValue);
+  };
+
+  return (
+    <div className="s-container-wrapper">
+      <h2>States</h2>
+      <hr />
+      <div className="filter-wrapper">
+        <p>Apply Filters:</p>
+        <Select
+          id="filterStates"
+          options={options}
+          value={filterValueStates}
+          onChange={handleChange}
+        />
+      </div>
+      <hr />
+      <div className="data-wrapper">
+        <ul>
+          {filterValueStates.value === "All" && <ListAllStates />}
+          {filterValueStates.value === "Active" && <ListActiveStates />}
+          {filterValueStates.value === "Not Active" && <ListNotActiveStates />}
+        </ul>
+      </div>
+    </div>
+  );
 });
 
 export default StatesArea;

@@ -1,44 +1,63 @@
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
 import Select from "react-select";
-import { useStore } from "../../../../Utilities/contextProvider";
-import { useInstance } from "../../../../Utilities/useInstance";
-import MeasurementsAreaVM from "./MeasurementsAreaVM";
+import ListAllMeasurements from "./ListAllMeasurements";
+import ListBatteryMeasurements from "./ListBatteryMeasurements";
+import ListBypassMeasurements from "./ListBypassMeasurements";
+import ListInputMeasurements from "./ListInputMeasurments";
+import ListOutputMeasurements from "./ListOutputMeasurements";
 
 const MeasurementsArea = observer(() => {
-// eslint-disable-next-line
-    const {
-        renderBatteryMeasurements,
-        renderInputMeasurements,
-        renderOutputMeasurements,
-        renderBypassMeasurements,
-        renderInverterMeasurements,
-        options,
-        handleChange,
-        filterValueMeasurements,
-        jsonData
-    } = useInstance(new MeasurementsAreaVM(useStore()));
+  const options = [
+    { value: "All", label: "All" },
+    { value: "Battery", label: "Battery" },
+    { value: "Input", label: "Input" },
+    { value: "Output", label: "Output" },
+    { value: "Bypass", label: "Bypass" },
+  ];
 
+  const [filterValueMeasurements, setFilterValueMeasurements] = useState({
+    value: "All",
+    label: "All",
+  });
 
-    
-    return(
-        <div className='data-wrapper'>
-            <div className='title-wrapper'>
-                <h2>Measurements</h2>
-                <p>Filters:</p>
-                <Select id='filterAlarms' options={options} defaultValue={options[0]} value={filterValueMeasurements} onChange={handleChange}/>
-            </div>
+  const handleChange = (optionValue) => {
+    setFilterValueMeasurements(optionValue);
+  };
 
-            <div className='data-wrapper'>
-                <ul>
-                    {filterValueMeasurements === "Battery" ? renderBatteryMeasurements(jsonData) : <></>}
-                    {filterValueMeasurements === "Input" ? renderInputMeasurements(jsonData) : <></>}
-                    {filterValueMeasurements === "Output" ? renderOutputMeasurements(jsonData) : <></>}
-                    {filterValueMeasurements === "Bypass" ? renderBypassMeasurements(jsonData) : <></>}
-                    {filterValueMeasurements === "Inverter" ? renderInverterMeasurements(jsonData) : <></>}
-                </ul>
-            </div>
-        </div>
-    )
+  return (
+    <div className="m-container-wrapper">
+      <h2>Measurements</h2>
+      <hr />
+      <div className="filter-wrapper">
+        <p>Apply Filters:</p>
+        <Select
+          id="filterAlarms"
+          options={options}
+          value={filterValueMeasurements}
+          onChange={handleChange}
+        />
+      </div>
+      <hr />
+      <div className="data-wrapper">
+        <ul>
+          {filterValueMeasurements.value === "All" && <ListAllMeasurements />}
+          {filterValueMeasurements.value === "Battery" && (
+            <ListBatteryMeasurements />
+          )}
+          {filterValueMeasurements.value === "Input" && (
+            <ListInputMeasurements />
+          )}
+          {filterValueMeasurements.value === "Output" && (
+            <ListOutputMeasurements />
+          )}
+          {filterValueMeasurements.value === "Bypass" && (
+            <ListBypassMeasurements />
+          )}
+        </ul>
+      </div>
+    </div>
+  );
 });
 
 export default MeasurementsArea;

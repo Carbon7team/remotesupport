@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataArea correct render DataArea render not in call 1`] = `
+<div
+  className="dataArea-wrapper"
+>
+  <div
+    id="not-available"
+  >
+    <h3>
+      Not Available for requests!
+    </h3>
+    <p>
+      If you are free, you can modify your availability
+    </p>
+  </div>
+</div>
+`;

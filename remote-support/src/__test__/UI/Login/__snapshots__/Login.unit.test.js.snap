@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login render Login render 1`] = `
+<div
+  className="login-wrapper"
+>
+  <h1>
+    Welcome technician,
+  </h1>
+  <p>
+    Sign in
+  </p>
+  <form
+    onSubmit={[Function]}
+  >
+    <fieldset>
+      <legend>
+        Personal data
+      </legend>
+      <div
+        className="username-wrapper"
+      >
+        <label
+          htmlFor="username"
+        >
+          Username
+        </label>
+        <span>
+          <input
+            id="username"
+            name="username"
+            onChange={[Function]}
+            placeholder="name.surname"
+            type="text"
+          />
+        </span>
+      </div>
+      <div
+        className="username-wrapper"
+      >
+        <label
+          htmlFor="password"
+        >
+          Password
+        </label>
+        <span>
+          <input
+            id="password"
+            name="password"
+            onChange={[Function]}
+            type="password"
+          />
+        </span>
+      </div>
+      <input
+        name="submit"
+        type="submit"
+        value="Sign in"
+      />
+      <div
+        id="error-message"
+      >
+        <p>
+          
+        </p>
+      </div>
+    </fieldset>
+  </form>
+</div>
+`;

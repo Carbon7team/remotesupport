@@ -1,38 +1,50 @@
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
 import Select from "react-select";
-import { useStore } from "../../../../Utilities/contextProvider";
-import { useInstance } from "../../../../Utilities/useInstance";
-import { AlarmsAreaVM } from "./AlarmsAreaVM";
+import ListAllAlarms from "./ListAllAlarms";
+import ListCriticalAlarms from "./ListCriticalAlarms";
+import ListWarningAlarms from "./ListWarningAlarms";
 
 const AlarmsArea = observer(() => {
+  const options = [
+    { value: "All", label: "All" },
+    { value: "Criticals", label: "Criticals" },
+    { value: "Warnings", label: "Warnings" },
+  ];
 
-    const {
-        renderAllAlarms,
-        renderCriticalAlarms,
-        renderWarningAlarms,
-        options,
-        handleChange,
-        filterValueAlarms,
-        jsonData
-    } = useInstance(new AlarmsAreaVM(useStore()));
+  const [filterValueAlarms, setFilterValueAlarms] = useState({
+    value: "All",
+    label: "All",
+  });
 
-    return(
-        <div className='container-wrapper'>
-            <div className='title-wrapper'>
-                <h2>Alarms</h2>
-                <p>Filters:</p>
-                <Select id='filterAlarms' options={options} defaultValue={options[0]} value={filterValueAlarms} onChange={handleChange}/>
-            </div>
+  const handleChange = (optionValue) => {
+    setFilterValueAlarms(optionValue);
+  };
 
-            <div className='data-wrapper'>
-                <ul>
-                    {filterValueAlarms === "All" ? renderAllAlarms(jsonData) : <></>}
-                    {filterValueAlarms === "Criticals" ? renderCriticalAlarms(jsonData) : <></>}
-                    {filterValueAlarms === "Warnings" ? renderWarningAlarms(jsonData) : <></>}
-                </ul>
-            </div>
-        </div>
-    )
+  return (
+    <div className="a-container-wrapper">
+      <h2>Alarms</h2>
+      <hr />
+      <div className="filter-wrapper">
+        <p>Apply Filters:</p>
+        <Select
+          id="filterAlarms"
+          options={options}
+          defaultValue={options[0]}
+          value={filterValueAlarms}
+          onChange={handleChange}
+        />
+      </div>
+      <hr />
+      <div className="data-wrapper">
+        <ul>
+          {filterValueAlarms.value === "All" && <ListAllAlarms />}
+          {filterValueAlarms.value === "Criticals" && <ListCriticalAlarms />}
+          {filterValueAlarms.value === "Warnings" && <ListWarningAlarms />}
+        </ul>
+      </div>
+    </div>
+  );
 });
 
 export default AlarmsArea;
