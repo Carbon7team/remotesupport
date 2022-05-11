@@ -4,7 +4,7 @@ import Select from "react-select";
 import ListAllMeasurements from "./ListAllMeasurements";
 import ListBatteryMeasurements from "./ListBatteryMeasurements";
 import ListBypassMeasurements from "./ListBypassMeasurements";
-import ListInputMeasurements from "./ListInputMeasurments";
+import ListInputMeasurements from "./ListInputMeasurements";
 import ListOutputMeasurements from "./ListOutputMeasurements";
 
 const MeasurementsArea = observer(() => {
