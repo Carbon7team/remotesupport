@@ -11,6 +11,11 @@ class StateUIStore {
     this.streamTech = undefined;
     this.idTech = undefined;
     this.tokenAuth = undefined;
+    this.requestReceived = false;
+    this.nameClient = null;
+    this.surnameClient = null;
+    this.emailClient = null;
+    this.usernameClient = null;
     makeObservable(this, {
       logged: observable,
       callAccepted: observable,
@@ -20,6 +25,11 @@ class StateUIStore {
       streamTech: observable,
       idTech: observable,
       tokenAuth: observable,
+      requestReceived: observable,
+      nameClient: observable,
+      surnameClient: observable,
+      emailClient: observable,
+      usernameClient: observable,
       setLogged: action,
       setCallAccepted: action,
       setCallEnded: action,
@@ -28,6 +38,11 @@ class StateUIStore {
       setStreamTech: action,
       setIdTech: action,
       setTokenAuth: action,
+      setRequestReceived: action,
+      setNameClient: action,
+      setSurnameClient: action,
+      setEmailClient: action,
+      setUsernameClient: action,
     });
   }
 
@@ -61,6 +76,23 @@ class StateUIStore {
 
   setTokenAuth(stringValue) {
     this.tokenAuth = stringValue;
+  }
+
+  setRequestReceived(boolValue) {
+    this.requestReceived = boolValue;
+  }
+
+  setNameClient(stringValue) {
+    this.nameClient = stringValue;
+  }
+  setSurnameClient(stringValue) {
+    this.surnameClient = stringValue;
+  }
+  setEmailClient(stringValue) {
+    this.emailClient = stringValue;
+  }
+  setUsernameClient(stringValue) {
+    this.usernameClient = stringValue;
   }
 }
 
