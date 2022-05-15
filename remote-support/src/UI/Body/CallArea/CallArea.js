@@ -189,10 +189,10 @@ const CallArea = observer(() => {
       {callAccepted && !callEnded && (
         <>
           <p>On call</p>
-          {peerTech.current.pingInterval < 100 && <p>Good connection</p>}
+          {/* {peerTech.current.pingInterval < 100 && <p>Good connection</p>}
           {peerTech.current.pingInterval > 100 &&
             peerTech.current.pingInterval < 300 && <p>Medium connection</p>}
-          {peerTech.current.pingInterval > 300 && <p>Bad connection</p>}
+          {peerTech.current.pingInterval > 300 && <p>Bad connection</p>} */}
           <audio ref={audioTech} />
           <Sidebar leaveCall={leaveCall} />
           <audio ref={audioUser} />
