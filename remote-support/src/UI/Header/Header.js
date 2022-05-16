@@ -78,14 +78,14 @@ const Header = observer(() => {
               value={selectAvailability}
               defaultValue={options[0]}
               onChange={handleChange}
-              isDisabled={callAccepted && !callEnded && requestReceived}
+              isDisabled={(callAccepted && !callEnded) || requestReceived}
             />
           </div>
           <button
             onClick={() => {
               logout();
             }}
-            disabled={callAccepted && !callEnded}
+            disabled={(callAccepted && !callEnded) || requestReceived}
           >
             Logout
           </button>

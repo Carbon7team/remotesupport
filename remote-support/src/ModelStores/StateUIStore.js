@@ -85,12 +85,15 @@ class StateUIStore {
   setNameClient(stringValue) {
     this.nameClient = stringValue;
   }
+
   setSurnameClient(stringValue) {
     this.surnameClient = stringValue;
   }
+
   setEmailClient(stringValue) {
     this.emailClient = stringValue;
   }
+
   setUsernameClient(stringValue) {
     this.usernameClient = stringValue;
   }

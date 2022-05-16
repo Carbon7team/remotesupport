@@ -16,6 +16,8 @@ const CallArea = observer(() => {
   const audioTech = useRef(null);
   const audioUser = useRef(null);
   const [idUserClient, setIdUserClient] = useState(null);
+  const [connectionUPS, setConnectionUPS] = useState(null);
+  const [dataReceived, setDataReceived] = useState(null);
 
   const socket = socketIOClient(ENDPOINT);
 
@@ -57,10 +59,14 @@ const CallArea = observer(() => {
           rootstore.datasetStore.measurementsFromJSON(
             JSON.parse(data).measurements
           );
+          setConnectionUPS(JSON.parse(data).uspConnectionState);
+          setDataReceived("OK");
         } catch {
           rootstore.datasetStore.resetStates();
           rootstore.datasetStore.resetAlarms();
           rootstore.datasetStore.resetMeasurements();
+          setConnectionUPS("Data not available");
+          setDataReceived("Data not available");
         }
       });
     });
@@ -104,10 +110,6 @@ const CallArea = observer(() => {
   };
 
   const leaveCall = async () => {
-    console.log(call);
-    console.log(connectionDataChannel);
-    console.log(peerTech);
-    console.log(call.current.open);
     await availabilityFetch(true);
     rootstore.stateUIStore.setCallEnded(true);
     rootstore.stateUIStore.setCallAccepted(false);
@@ -116,6 +118,8 @@ const CallArea = observer(() => {
     rootstore.datasetStore.resetStates();
     rootstore.datasetStore.resetAlarms();
     rootstore.datasetStore.resetMeasurements();
+    setConnectionUPS(null);
+    setDataReceived(null);
     setIdUserClient(null);
     audioTech.current = null;
     audioUser.current = null;
@@ -124,10 +128,6 @@ const CallArea = observer(() => {
     call.current.close();
     connectionDataChannel.current.close();
     peerTech.current.destroy();
-    console.log(call.current.open);
-    console.log(call);
-    console.log(connectionDataChannel);
-    console.log(peerTech);
   };
 
   const setDataRequestClient = () => {
@@ -144,7 +144,6 @@ const CallArea = observer(() => {
         if (fetchAvaiability.status == 200) {
           rootstore.stateUIStore.setRequestReceived(true);
         }
-
         rootstore.stateUIStore.setNameClient(data.first_name);
         rootstore.stateUIStore.setSurnameClient(data.last_name);
         rootstore.stateUIStore.setEmailClient(data.email);
@@ -193,6 +192,8 @@ const CallArea = observer(() => {
           {peerTech.current.pingInterval > 100 &&
             peerTech.current.pingInterval < 300 && <p>Medium connection</p>}
           {peerTech.current.pingInterval > 300 && <p>Bad connection</p>} */}
+          <p>Connection UPS: {connectionUPS}</p>
+          <p>Data received: {dataReceived}</p>
           <audio ref={audioTech} />
           <Sidebar leaveCall={leaveCall} />
           <audio ref={audioUser} />
