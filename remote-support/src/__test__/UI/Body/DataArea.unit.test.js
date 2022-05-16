@@ -7,12 +7,6 @@ import { useStore } from "../../../Utilities/contextProvider";
 jest.mock("../../../Utilities/contextProvider");
 
 describe("DataArea correct render", () => {
-  const vars = jest.fn().mockReturnValue({
-    peerTech: { current: new Peer() },
-    call: { current: null },
-    connectionDataChannel: { current: null },
-  });
-
   test("DataArea render not in call", () => {
     useStore.mockReturnValue({
       stateUIStore: {
@@ -20,7 +14,7 @@ describe("DataArea correct render", () => {
         callEnded: true,
       },
     });
-    let tree = create(<DataArea vars={vars} />).toJSON();
+    let tree = create(<DataArea />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -53,7 +47,7 @@ describe("DataArea correct render", () => {
         ],
       },
     });
-    render(<DataArea vars={vars} />);
+    render(<DataArea />);
     expect(document.getElementById("data-display")).toBeInTheDocument();
   });
 });

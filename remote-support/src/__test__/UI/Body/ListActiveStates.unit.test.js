@@ -6,29 +6,21 @@ import ListActiveStates from "../../../UI/Body/DataArea/StatesArea/ListActiveSta
 
 jest.mock("../../../Utilities/contextProvider");
 
-
-describe ("ListAllAlarms correct render", () => {
-    const vars = jest.fn().mockReturnValue({
-        peerTech: { current: new Peer() },
-        call: { current: null },
-        connectionDataChannel: { current: null },
+describe("ListAllAlarms correct render", () => {
+  test("Alarms Area correct render", () => {
+    useStore.mockReturnValue({
+      stateUIStore: {
+        callAccepted: true,
+        callEnded: false,
+        availabilityTech: true,
+      },
+      datasetStore: {
+        activeStates: [{ code: "S001", name: "stato  attivo", active: true }],
+      },
     });
-
-    test("Alarms Area correct render", () => {
-        useStore.mockReturnValue({
-            stateUIStore: {
-                callAccepted: true,
-                callEnded: false,
-                availabilityTech: true,
-            },
-            datasetStore: {
-                activeStates: [
-                  { code: "S001", name: "stato  attivo", active: true },
-                ],
-              }
-        });
-        render(<ListActiveStates vars={vars} />);
-        expect(document.getElementsByClassName("active-item")[0]).toBeInTheDocument();
-    });
+    render(<ListActiveStates />);
+    expect(
+      document.getElementsByClassName("active-item")[0]
+    ).toBeInTheDocument();
+  });
 });
-    

@@ -27,29 +27,31 @@ const Sidebar = observer((props) => {
 
   return (
     <div id="wrapper-sidebar">
-      {streamTech && audio ? (
-        <Button
-          className="audio-button"
-          variant="contained"
-          startIcon={<VolumeUp fontSize="large" />}
-          onClick={() => {
-            setAudio(false);
-            toggleAudio();
-          }}
-        />
-      ) : (
-        <Button
-          className="audio-button"
-          variant="contained"
-          startIcon={<VolumeOff fontSize="large" />}
-          onClick={() => {
-            setAudio(true);
-            toggleAudio();
-          }}
-        />
-      )}
+      {streamTech &&
+        (audio ? (
+          <Button
+            id="button-audio-on"
+            variant="contained"
+            startIcon={<VolumeUp fontSize="large" />}
+            onClick={() => {
+              setAudio(false);
+              toggleAudio();
+            }}
+          />
+        ) : (
+          <Button
+            id="button-audio-off"
+            variant="contained"
+            startIcon={<VolumeOff fontSize="large" />}
+            onClick={() => {
+              setAudio(true);
+              toggleAudio();
+            }}
+          />
+        ))}
 
       <Button
+        id="button-close"
         variant="contained"
         color="secondary"
         startIcon={<PhoneDisabled fontSize="large" />}
