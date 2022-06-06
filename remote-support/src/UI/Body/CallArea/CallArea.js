@@ -43,10 +43,34 @@ const CallArea = observer(() => {
         audioTech.current.srcObject = mediaStream;
 
         call.current = peerTech.current.call(idUserClient, mediaStream);
-
         call.current.on("stream", (remoteStream) => {
           audioUser.current.srcObject = remoteStream;
+          audioUser.current.play()
         });
+        connectionDataChannel.current.on("close", async () => {
+          if(!rootstore.stateUIStore.callEnded){
+            console.log(rootstore.stateUIStore)
+            console.log(rootstore.stateUIStore.callEnded)
+            await availabilityFetch(true);
+            rootstore.stateUIStore.setCallEnded(true);
+            rootstore.stateUIStore.setCallAccepted(false);
+            rootstore.stateUIStore.setStreamTech(undefined);
+            rootstore.stateUIStore.setRequestReceived(false);
+            rootstore.datasetStore.resetStates();
+            rootstore.datasetStore.resetAlarms();
+            rootstore.datasetStore.resetMeasurements();
+            setConnectionUPS(null);
+            setDataReceived(null);
+            setIdUserClient(null);
+            audioTech.current = null;
+            audioUser.current = null;
+
+            // come qui https://github.com/adrianhajdin/project_video_chat/blob/master/client/src/Context.js line 78
+            call.current.close();
+            connectionDataChannel.current.close();
+            peerTech.current.destroy();
+          }
+        })
       });
 
     connectionDataChannel.current = peerTech.current.connect(idUserClient);
