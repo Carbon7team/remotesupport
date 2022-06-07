@@ -17,6 +17,11 @@ describe("StateUIStore test", () => {
     });
     expect(rootstore.stateUIStore.idTech).toBe(undefined);
     expect(rootstore.stateUIStore.tokenAuth).toBe(undefined);
+    expect(rootstore.stateUIStore.requestReceived).toBe(false);
+    expect(rootstore.stateUIStore.nameClient).toBe(null);
+    expect(rootstore.stateUIStore.surnameClient).toBe(null);
+    expect(rootstore.stateUIStore.emailClient).toBe(null);
+    expect(rootstore.stateUIStore.usernameClient).toBe(null);
 
     // Setters' action
 
@@ -30,6 +35,11 @@ describe("StateUIStore test", () => {
     });
     rootstore.stateUIStore.setIdTech("IdTech");
     rootstore.stateUIStore.setTokenAuth("Token");
+    rootstore.stateUIStore.setRequestReceived(true);
+    rootstore.stateUIStore.setNameClient("Nome");
+    rootstore.stateUIStore.setSurnameClient("Cognome");
+    rootstore.stateUIStore.setEmailClient("email@email.com");
+    rootstore.stateUIStore.setUsernameClient("username");
 
     // After setters' action
 
@@ -43,5 +53,10 @@ describe("StateUIStore test", () => {
     });
     expect(rootstore.stateUIStore.idTech).toBe("IdTech");
     expect(rootstore.stateUIStore.tokenAuth).toBe("Token");
+    expect(rootstore.stateUIStore.requestReceived).toBe(true);
+    expect(rootstore.stateUIStore.nameClient).toBe("Nome");
+    expect(rootstore.stateUIStore.surnameClient).toBe("Cognome");
+    expect(rootstore.stateUIStore.emailClient).toBe("email@email.com");
+    expect(rootstore.stateUIStore.usernameClient).toBe("username");
   });
 });

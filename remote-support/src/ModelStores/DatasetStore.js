@@ -101,6 +101,7 @@ class DatasetStore {
 
   resetMeasurements() {
     this.measurements.clear();
+    console.log(this.measurements);
   }
 
   statesFromJSON(jsonDataParsed) {

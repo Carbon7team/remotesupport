@@ -6,34 +6,28 @@ import ListOutputMeasurements from "../../../UI/Body/DataArea/MeasurementsArea/L
 
 jest.mock("../../../Utilities/contextProvider");
 
-
-describe ("ListOutputMeasurements correct render", () => {
-    const vars = jest.fn().mockReturnValue({
-        peerTech: { current: new Peer() },
-        call: { current: null },
-        connectionDataChannel: { current: null },
+describe("ListOutputMeasurements correct render", () => {
+  test("ListOutputMeasurements correct render", () => {
+    useStore.mockReturnValue({
+      stateUIStore: {
+        callAccepted: true,
+        callEnded: false,
+        availabilityTech: true,
+      },
+      datasetStore: {
+        outputMeasurements: [
+          {
+            code: "M014",
+            name: "NomeM014",
+            value: 14,
+            unitOfMeasure: "Unità di misura",
+          },
+        ],
+      },
     });
-
-    test("ListOutputMeasurements correct render", () => {
-        useStore.mockReturnValue({
-            stateUIStore: {
-                callAccepted: true,
-                callEnded: false,
-                availabilityTech: true,
-            },
-            datasetStore: {
-                outputMeasurements: [
-                  {
-                    code: "M014",
-                    name: "NomeM014",
-                    value: 14,
-                    unitOfMeasure: "Unità di misura",
-                  },
-                ],
-              },
-        });
-        render(<ListOutputMeasurements vars={vars} />);
-        expect(document.getElementsByClassName("output-measurement")[0]).toBeInTheDocument();
-    });
+    render(<ListOutputMeasurements />);
+    expect(
+      document.getElementsByClassName("output-measurement")[0]
+    ).toBeInTheDocument();
+  });
 });
-

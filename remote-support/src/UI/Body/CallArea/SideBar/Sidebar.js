@@ -13,12 +13,11 @@ import { useStore } from "../../../../Utilities/contextProvider";
 const Sidebar = observer((props) => {
   const rootstore = useStore();
 
-  const { call, connectionDataChannel, peerTech } = props.vars;
+  const { leaveCall } = props;
 
   const { streamTech } = rootstore.stateUIStore;
 
   const [audio, setAudio] = useState(true);
-  // const [video, setVideo] = useState(true);
 
   const toggleAudio = () => {
     streamTech
@@ -26,72 +25,33 @@ const Sidebar = observer((props) => {
       .forEach((track) => (track.enabled = !track.enabled));
   };
 
-  // const toggleVideo = () => {
-  //   streamTech
-  //     .getVideoTracks()
-  //     .forEach((track) => (track.enabled = !track.enabled));
-  // };
-
-  const leaveCall = () => {
-    rootstore.stateUIStore.setCallEnded(true);
-    rootstore.stateUIStore.setCallAccepted(false);
-    rootstore.stateUIStore.setStreamTech(undefined);
-    rootstore.datasetStore.resetStates();
-    rootstore.datasetStore.resetAlarms();
-    rootstore.datasetStore.resetMeasurements();
-
-    // come qui https://github.com/adrianhajdin/project_video_chat/blob/master/client/src/Context.js line 78
-    call.current.close();
-    connectionDataChannel.current.close();
-    peerTech.current.destroy();
-  };
-
   return (
     <div id="wrapper-sidebar">
-      {audio ? (
-        <Button
-          className="audio-button"
-          variant="contained"
-          startIcon={<VolumeUp fontSize="large" />}
-          onClick={() => {
-            setAudio(false);
-            toggleAudio();
-          }}
-        />
-      ) : (
-        <Button
-          className="audio-button"
-          variant="contained"
-          startIcon={<VolumeOff fontSize="large" />}
-          onClick={() => {
-            setAudio(true);
-            toggleAudio();
-          }}
-        />
-      )}
-      {/* {video ? (
-        <Button
-          className="video-button"
-          variant="contained"
-          startIcon={<Videocam fontSize="large" />}
-          onClick={() => {
-            setVideo(false);
-            toggleVideo();
-          }}
-        />
-      ) : (
-        <Button
-          className="video-button"
-          variant="contained"
-          startIcon={<VideocamOff fontSize="large" />}
-          onClick={() => {
-            setVideo(true);
-            toggleVideo();
-          }}
-        />
-      )} */}
+      {streamTech &&
+        (audio ? (
+          <Button
+            id="button-audio-on"
+            variant="contained"
+            startIcon={<VolumeUp fontSize="large" />}
+            onClick={() => {
+              setAudio(false);
+              toggleAudio();
+            }}
+          />
+        ) : (
+          <Button
+            id="button-audio-off"
+            variant="contained"
+            startIcon={<VolumeOff fontSize="large" />}
+            onClick={() => {
+              setAudio(true);
+              toggleAudio();
+            }}
+          />
+        ))}
 
       <Button
+        id="button-close"
         variant="contained"
         color="secondary"
         startIcon={<PhoneDisabled fontSize="large" />}

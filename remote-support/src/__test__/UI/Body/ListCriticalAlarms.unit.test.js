@@ -9,11 +9,6 @@ jest.mock("../../../Utilities/contextProvider");
 
 
 describe ("ListAllAlarms correct render", () => {
-    const vars = jest.fn().mockReturnValue({
-        peerTech: { current: new Peer() },
-        call: { current: null },
-        connectionDataChannel: { current: null },
-    });
 
     test("Alarms Area correct render", () => {
         useStore.mockReturnValue({
@@ -27,7 +22,7 @@ describe ("ListAllAlarms correct render", () => {
               },
         });
         
-        render(<ListCriticalAlarms vars={vars} />);
+        render(<ListCriticalAlarms />);
         expect(document.getElementsByClassName("critical-item")[0]).toBeInTheDocument();
     });
 });

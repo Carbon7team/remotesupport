@@ -7,12 +7,6 @@ import { useStore } from "../../../Utilities/contextProvider";
 jest.mock("../../../Utilities/contextProvider");
 
 describe("CallArea correct render", () => {
-  const vars = jest.fn().mockReturnValue({
-    peerTech: { current: new Peer() },
-    call: { current: null },
-    connectionDataChannel: { current: null },
-  });
-
   test("CallArea render not in call", () => {
     useStore.mockReturnValue({
       stateUIStore: {
@@ -21,7 +15,7 @@ describe("CallArea correct render", () => {
       },
     });
 
-    let tree = create(<CallArea vars={vars} />).toJSON();
+    let tree = create(<CallArea />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -34,7 +28,7 @@ describe("CallArea correct render", () => {
       },
     });
 
-    render(<CallArea vars={vars} />);
+    render(<CallArea />);
     expect(document.getElementById("wrapper-sidebar")).toBeInTheDocument();
   });
 });

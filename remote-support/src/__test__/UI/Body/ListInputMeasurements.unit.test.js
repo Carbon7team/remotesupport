@@ -6,34 +6,28 @@ import ListInputMeasurements from "../../../UI/Body/DataArea/MeasurementsArea/Li
 
 jest.mock("../../../Utilities/contextProvider");
 
-
-describe ("ListInputMeasurements correct render", () => {
-    const vars = jest.fn().mockReturnValue({
-        peerTech: { current: new Peer() },
-        call: { current: null },
-        connectionDataChannel: { current: null },
+describe("ListInputMeasurements correct render", () => {
+  test("ListInputMeasurements correct render", () => {
+    useStore.mockReturnValue({
+      stateUIStore: {
+        callAccepted: true,
+        callEnded: false,
+        availabilityTech: true,
+      },
+      datasetStore: {
+        inputMeasurements: [
+          {
+            code: "M032",
+            name: "NomeM032",
+            value: 32,
+            unitOfMeasure: "Unità di misura",
+          },
+        ],
+      },
     });
-
-    test("ListInputMeasurements correct render", () => {
-        useStore.mockReturnValue({
-            stateUIStore: {
-                callAccepted: true,
-                callEnded: false,
-                availabilityTech: true,
-            },
-            datasetStore: {
-                inputMeasurements: [
-                  {
-                    code: "M032",
-                    name: "NomeM032",
-                    value: 32,
-                    unitOfMeasure: "Unità di misura",
-                  },
-                ],
-              },
-        });
-        render(<ListInputMeasurements vars={vars} />);
-        expect(document.getElementsByClassName("input-measurement")[0]).toBeInTheDocument();
-    });
+    render(<ListInputMeasurements />);
+    expect(
+      document.getElementsByClassName("input-measurement")[0]
+    ).toBeInTheDocument();
+  });
 });
-

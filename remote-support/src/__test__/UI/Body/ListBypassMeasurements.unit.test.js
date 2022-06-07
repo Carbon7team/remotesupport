@@ -6,34 +6,28 @@ import ListBypassMeasurements from "../../../UI/Body/DataArea/MeasurementsArea/L
 
 jest.mock("../../../Utilities/contextProvider");
 
-
-describe ("ListBypassMeasurements correct render", () => {
-    const vars = jest.fn().mockReturnValue({
-        peerTech: { current: new Peer() },
-        call: { current: null },
-        connectionDataChannel: { current: null },
+describe("ListBypassMeasurements correct render", () => {
+  test("ListBypassMeasurements correct render", () => {
+    useStore.mockReturnValue({
+      stateUIStore: {
+        callAccepted: true,
+        callEnded: false,
+        availabilityTech: true,
+      },
+      datasetStore: {
+        bypassMeasurements: [
+          {
+            code: "M039",
+            name: "NomeM039",
+            value: 39,
+            unitOfMeasure: "Unità di misura",
+          },
+        ],
+      },
     });
-
-    test("ListBypassMeasurements correct render", () => {
-        useStore.mockReturnValue({
-            stateUIStore: {
-                callAccepted: true,
-                callEnded: false,
-                availabilityTech: true,
-            },
-            datasetStore: {
-                bypassMeasurements: [
-                  {
-                    code: "M039",
-                    name: "NomeM039",
-                    value: 39,
-                    unitOfMeasure: "Unità di misura",
-                  },
-                ],
-              },
-        });
-        render(<ListBypassMeasurements vars={vars} />);
-        expect(document.getElementsByClassName("bypass-measurement")[0]).toBeInTheDocument();
-    });
+    render(<ListBypassMeasurements />);
+    expect(
+      document.getElementsByClassName("bypass-measurement")[0]
+    ).toBeInTheDocument();
+  });
 });
-
