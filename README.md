@@ -5,3 +5,5 @@
 # Remote Support
 
 Applicazione Web sviluppata in React per fornire un servizio di assistenza remota all'app [Virtual Display](https://github.com/Carbon7team/VirtualDisplay).
+L'assistenza è fornita tramite chiamata WebRTC.
+Da interfaccia è possibile accettare o declinare delle richieste in arrivo, previa disponibilità del tecnico, per poi visualizzare a schermo le informazioni salienti del dispositivo UPS in esame. Si possono quindi visualizzare e filtrare stati, allarmi e misurazioni.
